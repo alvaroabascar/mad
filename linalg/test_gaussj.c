@@ -8,12 +8,12 @@ int main(int argc, char *argv[])
   A = alloc_matrix_double(2, 2);
   B = alloc_matrix_double(2, 1);
   A.data[0][0] = 1;
-  A.data[0][1] = 2;
-  A.data[1][0] = 3;
+  A.data[0][1] = 3;
+  A.data[1][0] = 2;
   A.data[1][1] = 4;
 
-  B.data[0][0] = 5;
-  B.data[1][0] = 11;
+  B.data[0][0] = 7;
+  B.data[1][0] = 10;
 
   printf("before gaussj:\n");
   print_a_b(A, B);

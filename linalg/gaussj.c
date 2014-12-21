@@ -5,8 +5,8 @@
 
 #define abs(x) ((x > 0 ? x : -x))
 
-void do_pivoting(matrix_double *A, matrix_double *B, int i, int *n_changes,
-                 struct pair_coordinates *col_interchanges);
+void do_pivoting(matrix_double *A, matrix_double *B, int i, int *row_changes,
+                                                            int *col_changes);
 struct coordinate find_best_pivot(matrix_double *A, int i);
 
 /* Given a matrix of coefficients (A), and a matrix of right-hand sides (B),
@@ -37,9 +37,22 @@ void gaussj(matrix_double *A, matrix_double *B)
    double current_row_B[B->ncols];
    double row_to_substract_A[A->ncols];
    double row_to_substract_B[B->ncols];
-   /* keep track of column interchanges */
-   int num_col_interchanges = 0;
-   struct pair_coordinates col_interchanges[A->nrows];
+   /* keep track of row and column interchanges */
+   int row_changes[A->nrows];
+   int col_changes[A->ncols];
+   /* currently all rows & cols are in the original state:
+    * row_changes[0] = 0, row_changes[1] = 1, etc.
+    * If at some point row 0 and 1 are interchanged, this will
+    * be stored in the array as:
+    * row_changes[0] = 1, row_changes[1] = 0.
+    * The same will occur with col_changes
+    */
+   for (i = 0; i < A->nrows; i++) {
+     row_changes[i] = i;
+   }
+   for(i = 0; i < A->ncols; i++) {
+     col_changes[i] = i;
+   }
 
    /* I use this to delimitate a section of the matrix, so that I
     * can easily divide only the elements at the right at the pivot, and
@@ -51,7 +64,7 @@ void gaussj(matrix_double *A, matrix_double *B)
      /* 1. place in the diagonal the best (largest) element found in either
       * below in the same column or at the right in the same row, keeping
       * track of the column interchanges, if any. */
-     do_pivoting(A, B, i, &num_col_interchanges, col_interchanges);
+     do_pivoting(A, B, i, row_changes, col_changes);
      pivot = A->data[i][i];
      /* 2. divide this row by the pivot */
      /* 2.1 do it in A (we skip elements at left of pivot, which are zero) */
@@ -80,46 +93,40 @@ void gaussj(matrix_double *A, matrix_double *B)
        copy_vector(B->ncols, current_row_B, row_to_substract_B);
        multiply_vector(A->ncols, row_to_substract_A, -1*A->data[j][i]);
        multiply_vector(B->ncols, row_to_substract_B, -1*A->data[j][i]);
+       if (j < i) {
+         /* this row won't be modified again */
+       }
        /* now substract (add, as it was multiplied by -1) it from row j */
        add_to_row_matrix_double(A, j, row_to_substract_A);
        add_to_row_matrix_double(B, j, row_to_substract_B);
      }
-
    }
+   /* unscramble solution using col_changes as the guide */
+   reorder_matrix_rows(B, col_changes);
 }
 
 /* perform the pivoting process: look for the best pivot and then
  * interchange the rows or columns accordingly. Increase num_changes 
  * if two columns have been interchanged
  */
-void do_pivoting(matrix_double *A, matrix_double *B, int i, int *n_changes,
-                 struct pair_coordinates *col_interchanges)
+void do_pivoting(matrix_double *A, matrix_double *B, int i, int *row_changes,
+                                                            int *col_changes)
 {
   struct coordinate pivot = find_best_pivot(A, i);
-  /* best pivot found in same row */
-  if (pivot.row == i && pivot.col > i) {
-    /* interchange columns in A and keep track of it */
-    switch_cols_matrix_double(A, i, pivot.col);
-    /* interchange rows in B and keep track of it */
-    printf("switching rows in B asdf\n");
-    switch_rows_matrix_double(B, i, pivot.col);
-    /* keep track of this interchange */
-    /* position of the diagonal element */
-    col_interchanges[(*n_changes)].a.row = i;
-    col_interchanges[(*n_changes)].a.col = i;
-    /* position of the element found as best pivot */
-    col_interchanges[(*n_changes)].b.row = pivot.row;
-    col_interchanges[(*n_changes)].b.col = pivot.col;
-    (*n_changes)++;
+  /* we need to interchange columns */
+  if (pivot.col > i) {
+    /* interchange columns in A */
+    interchange_cols_matrix_double(A, i, pivot.col);
+    /* and keep track of it */
+    interchange_elements(col_changes, i, pivot.col);
   }
-  /* best pivot found in same column */
-  else if (pivot.row > i && pivot.col == i) {
+  /* we need to interchange rows */
+  if (pivot.row > i && pivot.col == i) {
     /* interchange rows in A and B*/
-    switch_rows_matrix_double(A, i, pivot.row);
-    switch_rows_matrix_double(B, i, pivot.row);
-  }
-  else if (! (pivot.row == i && pivot.col == i)) {
-    fprintf(stderr, "Error in find_best_pivot\n");
+    interchange_rows_matrix_double(A, i, pivot.row);
+    interchange_rows_matrix_double(B, i, pivot.row);
+    /* keep track of it */
+    interchange_elements(row_changes, i, pivot.row);
   }
 }
 
@@ -129,23 +136,17 @@ void do_pivoting(matrix_double *A, matrix_double *B, int i, int *n_changes,
  */
 struct coordinate find_best_pivot(matrix_double *A, int pos)
 {
-  int i;
+  int i, j;
   double max_pivot_val = abs(A->data[pos][pos]);
   struct coordinate best_pivot = { .row = pos, .col = pos };
   /* check the same column */
   for (i = pos; i < A->nrows; i++) {
-    if (abs(A->data[i][pos]) > max_pivot_val) {
-      max_pivot_val = abs(A->data[i][pos]);
-      best_pivot.row = i;
-      best_pivot.col = pos;
-    }
-  }
-  /* check same row */
-  for (i = pos; i < A->ncols; i++) {
-    if (abs(A->data[pos][i]) > max_pivot_val) {
-      max_pivot_val = abs(A->data[i][pos]);
-      best_pivot.row = pos;
-      best_pivot.col = i;
+    for (j = pos; j < A->ncols; j++) {
+      if (abs(A->data[i][j]) > max_pivot_val) {
+        max_pivot_val = abs(A->data[i][j]);
+        best_pivot.row = i;
+        best_pivot.col = j;
+      }
     }
   }
   return best_pivot;
