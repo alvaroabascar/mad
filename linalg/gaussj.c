@@ -143,7 +143,8 @@ struct coordinate find_best_pivot(matrix_double *A, int pos)
   double max_pivot_val = abs(A->data[pos][pos]);
   struct coordinate best_pivot = { .row = pos, .col = pos };
   for (i = pos; i < A->nrows; i++) {
-    for (j = pos; j < A->ncols; j++) {
+    for (j = pos; j == pos; j++) {
+    //for (j = pos; j < A->ncols; j++) {
       if (abs(A->data[i][j]) > max_pivot_val) {
         max_pivot_val = abs(A->data[i][j]);
         best_pivot.row = i;
