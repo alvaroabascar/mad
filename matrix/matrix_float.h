@@ -9,4 +9,4 @@ typedef struct {
   float **data;
 } matrix_float;
 
-#endif /* __MATRIX__ */
+#endif /* __MATRIX_FLOAT__ */

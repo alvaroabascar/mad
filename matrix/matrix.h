@@ -13,5 +13,6 @@ struct pair_coordinates {
 
 #include "matrix_double.c"
 #include "matrix_float.c"
+#include "matrix_int.c"
 
 #endif /* __MATRIX_H__ */

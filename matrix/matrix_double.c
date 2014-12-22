@@ -10,8 +10,8 @@ void multiply_section_matrix_double(matrix_double *matrix,
 void add_to_section_matrix_double(matrix_double *matrix,
                                   struct pair_coordinates section,
                                   double k);
-void interchange_elements(int *array, int i, int j);
-void reorder_matrix_rows(matrix_double *matrix, int *orders);
+void interchange_array_elements_double(int *array, int i, int j);
+void reorder_matrix_rows_double(matrix_double *matrix, int *orders);
 void multiply_row_matrix_double(matrix_double *matrix, int row, double k);
 void multiply_matrix_double(matrix_double *matrix, double k);
 void copy_row_matrix_double(matrix_double *A, double *v, int row);
@@ -19,8 +19,8 @@ void add_to_row_matrix_double(matrix_double *matrix, int row,
                                       double vector[matrix->ncols]);
 void interchange_rows_matrix_double(matrix_double *matrix,
                                         int rowA, int rowB);
-void copy_vector(int len, double *source, double *dest);
-void multiply_vector(int len, double *vector, double k);
+void copy_vector_double(int len, double *source, double *dest);
+void multiply_vector_double(int len, double *vector, double k);
 
 
 
@@ -102,7 +102,7 @@ void add_to_section_matrix_double(matrix_double *matrix,
   }
 }
 
-void interchange_elements(int *array, int i, int j)
+void interchange_array_elements_double(int *array, int i, int j)
 {
   int tmp;
   tmp = array[i];
@@ -110,13 +110,13 @@ void interchange_elements(int *array, int i, int j)
   array[j] = tmp;
 }
 
-void reorder_matrix_rows(matrix_double *matrix, int *orders)
+void reorder_matrix_rows_double(matrix_double *matrix, int *orders)
 {
   int i;
   for (i = 0; i < matrix->nrows; i++) {
     while (orders[i] != i) {
       interchange_rows_matrix_double(matrix, i, orders[i]);
-      interchange_elements(orders, i, orders[i]);
+      interchange_array_elements_double(orders, i, orders[i]);
     }
   }
 }
@@ -195,7 +195,7 @@ void interchange_cols_matrix_double(matrix_double *matrix,
   }
 }
 
-void copy_vector(int len, double *source, double *dest)
+void copy_vector_double(int len, double *source, double *dest)
 {
   int i;
   for (i = 0; i < len; i++) {
@@ -203,7 +203,7 @@ void copy_vector(int len, double *source, double *dest)
   }
 }
 
-void multiply_vector(int len, double *vector, double k)
+void multiply_vector_double(int len, double *vector, double k)
 {
   int i;
   for (i = 0; i < len; i++) {
