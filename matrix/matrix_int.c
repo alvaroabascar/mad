@@ -60,7 +60,7 @@ void print_matrix_int(matrix_int matrix)
   int i, j;
   for (i = 0; i < matrix.nrows; i++) {
     for (j = 0; j < matrix.ncols; j++) {
-      printf("%10f ", matrix.data[i][j]);
+      printf("%10d ", matrix.data[i][j]);
     }
     printf("\n");
   }
@@ -70,7 +70,7 @@ void print_matrix_int(matrix_int matrix)
  * elements in the matrix within the square delimited by "start" and "end"
  */
 void multiply_section_matrix_int(matrix_int *matrix,
-                                  struct pair_coordinates section,
+                                 struct pair_coordinates section,
                                   int k)
 {
   int i, j;
