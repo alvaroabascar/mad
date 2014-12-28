@@ -1,4 +1,4 @@
-#include "gaussj.c"
+#include "gaussj_backsubs.c"
 
 void print_a_b(matrix_double, matrix_double);
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
   printf("before gaussj:\n");
   print_a_b(A, B);
-  gaussj(&A, &B);
+  gaussj_backsubs(&A, &B);
   printf("after gaussj:\n");
   print_a_b(A, B);
   return 0;

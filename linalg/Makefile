@@ -1,7 +1,7 @@
-objs = test_gaussj.o
+progs = test_gaussj test_gaussj_bs
 CC = gcc
 
-all: test_gaussj
+all: $(progs)
 
 clean:
-	rm test_gaussj
+	rm $(progs)
