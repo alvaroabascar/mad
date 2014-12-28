@@ -11,8 +11,7 @@ struct pair_coordinates {
   struct coordinate b;
 };
 
-#include "matrix_double.c"
-#include "matrix_float.c"
-#include "matrix_int.c"
+#include "matrix_double.h"
+#include "matrix_int.h"
 
 #endif /* __MATRIX_H__ */

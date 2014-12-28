@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../matrix/matrix.h"
+#include <matrix.h>
 
 /* Gauss-Jordan elimination with full pivoting */
 
@@ -64,14 +64,16 @@ void gaussj(matrix_double *A, matrix_double *B)
      /* 2. divide this row by the pivot */
      /* 2.1 do it in A (we skip elements at left of pivot, which are zero) */
      A->data[i][i] = 1;
+     /*
      matrix_section.a = (struct coordinate) { .row = i,
                                               .col = i };
      matrix_section.b = (struct coordinate) { .row = i,
                                               .col = A->ncols - 1 };
-     /* multiply_section_matrix_double(A, matrix_section, 1 / pivot); */
-     multiply_row_matrix_double(A, i, 1 / pivot);
+     multiply_section_matrix_double(A, matrix_section, 1 / pivot);
+     */
+     multiply_row_matrix_double(A, i, 1/pivot);
      /* 2.2 do it in B. In this case do it with the whole row */
-     multiply_row_matrix_double(B, i, 1 / pivot);
+     multiply_row_matrix_double(B, i, 1/pivot);
      /* 3. for each row below, substract the right amount from the current row
       * to make all the elements below the pivot equal to zero
       * We do it in A and in B */
@@ -79,7 +81,7 @@ void gaussj(matrix_double *A, matrix_double *B)
      copy_row_matrix_double(A, current_row_A, i);
      copy_row_matrix_double(B, current_row_B, i);
      /* for each OTHER row, substract the right amount of current_row to
-      * make the elements [j][i] zero */
+      * make the elements [j][i] equal to zero */
      for (j = 0; j < A->nrows; j++) {
        if (j == i) {
          continue;
