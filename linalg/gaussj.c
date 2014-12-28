@@ -5,8 +5,7 @@
 
 #define abs(x) ((x > 0 ? x : -x))
 
-void do_pivoting(matrix_double *A, matrix_double *B, int i, int *row_changes,
-                                                            int *col_changes);
+void do_pivoting(matrix_double *A, matrix_double *B, int i, int *col_changes);
 struct coordinate find_best_pivot(matrix_double *A, int i);
 
 /* Given a matrix of coefficients (A), and a matrix of right-hand sides (B),
@@ -37,20 +36,15 @@ void gaussj(matrix_double *A, matrix_double *B)
    double current_row_B[B->ncols];
    double row_to_substract_A[A->ncols];
    double row_to_substract_B[B->ncols];
-   /* keep track of row and column interchanges */
-   int row_changes[A->nrows];
+   /* keep track of column interchanges */
    int col_changes[A->ncols];
    int col_changes_copy[A->ncols];
-   /* currently all rows & cols are in the original state:
-    * row_changes[0] = 0, row_changes[1] = 1, etc.
-    * If at some point row 0 and 1 are interchanged, this will
+   /* currently all cols are in the original state:
+    * col_changes[0] = 0, col_changes[1] = 1, etc.
+    * If at some point col 0 and 1 are interchanged, this will
     * be stored in the array as:
-    * row_changes[0] = 1, row_changes[1] = 0.
-    * The same will occur with col_changes
+    * col_changes[0] = 1, col_changes[1] = 0.
     */
-   for (i = 0; i < A->nrows; i++) {
-     row_changes[i] = i;
-   }
    for(i = 0; i < A->ncols; i++) {
      col_changes[i] = i;
    }
@@ -65,7 +59,7 @@ void gaussj(matrix_double *A, matrix_double *B)
      /* 1. place in the diagonal the best (largest) element found in either
       * below in the same column or at the right in the same row, keeping
       * track of the column interchanges, if any. */
-     do_pivoting(A, B, i, row_changes, col_changes);
+     do_pivoting(A, B, i, col_changes);
      pivot = A->data[i][i];
      /* 2. divide this row by the pivot */
      /* 2.1 do it in A (we skip elements at left of pivot, which are zero) */
@@ -112,24 +106,21 @@ void gaussj(matrix_double *A, matrix_double *B)
  * interchange the rows or columns accordingly. Increase num_changes 
  * if two columns have been interchanged
  */
-void do_pivoting(matrix_double *A, matrix_double *B, int i, int *row_changes,
-                                                            int *col_changes)
+void do_pivoting(matrix_double *A, matrix_double *B, int i, int *col_changes)
 {
   struct coordinate pivot = find_best_pivot(A, i);
-  /* we need to interchange columns */
+  /* if we need to interchange columns */
   if (pivot.col > i) {
     /* interchange columns in A */
     interchange_cols_matrix_double(A, i, pivot.col);
     /* and keep track of it */
     interchange_array_elements_double(col_changes, i, pivot.col);
   }
-  /* we need to interchange rows */
+  /* if we need to interchange rows */
   if (pivot.row > i && pivot.col == i) {
     /* interchange rows in A and B*/
     interchange_rows_matrix_double(A, i, pivot.row);
     interchange_rows_matrix_double(B, i, pivot.row);
-    /* keep track of it */
-    interchange_array_elements_double(row_changes, i, pivot.row);
   }
 }
 
