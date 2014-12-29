@@ -17,4 +17,4 @@ test_gaussj: $(DEPS_GAUSSJ)
 test_gaussj_bs: $(DEPS_GAUSSJBS)
 
 clean:
-	rm $(progs)
+	rm $(progs) $(DEPS_GAUSSJ) $(DEPS_GAUSSJBS)

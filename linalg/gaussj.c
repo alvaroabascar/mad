@@ -49,11 +49,6 @@ void gaussj(matrix_double *A, matrix_double *B)
      col_changes[i] = i;
    }
 
-   /* I use this to delimitate a section of the matrix, so that I
-    * can easily divide only the elements at the right at the pivot, and
-    * not all the row */
-   struct pair_coordinates matrix_section;
-
    /* for each element in the diagonal... */
    for (i = 0; i < A->nrows; i++) {
      /* 1. place in the diagonal the best (largest) element found in either
@@ -64,13 +59,7 @@ void gaussj(matrix_double *A, matrix_double *B)
      /* 2. divide this row by the pivot */
      /* 2.1 do it in A (we skip elements at left of pivot, which are zero) */
      A->data[i][i] = 1;
-     /*
-     matrix_section.a = (struct coordinate) { .row = i,
-                                              .col = i };
-     matrix_section.b = (struct coordinate) { .row = i,
-                                              .col = A->ncols - 1 };
-     multiply_section_matrix_double(A, matrix_section, 1 / pivot);
-     */
+     
      multiply_row_matrix_double(A, i, 1/pivot);
      /* 2.2 do it in B. In this case do it with the whole row */
      multiply_row_matrix_double(B, i, 1/pivot);
