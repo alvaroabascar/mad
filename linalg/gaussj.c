@@ -1,13 +1,10 @@
 #include <stdio.h>
 #include <matrix.h>
-#include "misc.c"
+#include "pivoting.c"
 
 /* Gauss-Jordan elimination with full pivoting */
 
 #define abs(x) ((x > 0 ? x : -x))
-
-void do_pivoting(matrix_double *A, matrix_double *B, int i, int *col_changes);
-struct coordinate find_best_pivot(matrix_double *A, int i);
 
 /* Given a matrix of coefficients (A), and a matrix of right-hand sides (B),
  * which compose a system of equations A*x = B, perform a gauss-jordan
@@ -92,48 +89,4 @@ void gaussj(matrix_double *A, matrix_double *B)
    copy_vector_int(A->ncols, col_changes, col_changes_copy);
    reorder_matrix_rows_double(B, col_changes);
    reorder_matrix_rows_double(A, col_changes_copy);
-}
-
-/* perform the pivoting process: look for the best pivot and then
- * interchange the rows or columns accordingly. Increase num_changes 
- * if two columns have been interchanged
- */
-void do_pivoting(matrix_double *A, matrix_double *B, int i, int *col_changes)
-{
-  struct coordinate pivot = find_best_pivot(A, i);
-  /* if we need to interchange columns */
-  if (pivot.col > i) {
-    /* interchange columns in A */
-    interchange_cols_matrix_double(A, i, pivot.col);
-    /* and keep track of it */
-    interchange_array_elements_double(col_changes, i, pivot.col);
-  }
-  /* if we need to interchange rows */
-  if (pivot.row > i && pivot.col == i) {
-    /* interchange rows in A and B*/
-    interchange_rows_matrix_double(A, i, pivot.row);
-    interchange_rows_matrix_double(B, i, pivot.row);
-  }
-}
-
-/* Given a matrix A, and the position (i, j) for which a pivot is needed,
- * this function finds the best (largest) pivot, which is returned in a
- * struct coordinate {row, col}
- */
-struct coordinate find_best_pivot(matrix_double *A, int pos)
-{
-  int i, j;
-  double max_pivot_val = abs(A->data[pos][pos]);
-  struct coordinate best_pivot = { .row = pos, .col = pos };
-  for (i = pos; i < A->nrows; i++) {
-    for (j = pos; j == pos; j++) {
-    //for (j = pos; j < A->ncols; j++) {
-      if (abs(A->data[i][j]) > max_pivot_val) {
-        max_pivot_val = abs(A->data[i][j]);
-        best_pivot.row = i;
-        best_pivot.col = j;
-      }
-    }
-  }
-  return best_pivot;
 }
