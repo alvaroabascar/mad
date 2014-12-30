@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <matrix.h>
+#include "misc.c"
 
 /* Gauss-Jordan elimination with full pivoting */
 
