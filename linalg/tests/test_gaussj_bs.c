@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
   int i, j;
   matrix_double A, B;
   A = alloc_matrix_double(3, 3);
-  B = alloc_matrix_double(3, 2);
+  B = alloc_matrix_double(3, 1);
   srand(100);
   for (i = 0; i < A.nrows; i++) {
     for (j = 0; j < A.ncols; j++) {
