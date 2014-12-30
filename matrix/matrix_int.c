@@ -4,13 +4,16 @@
 /* allocate enough space for a nrows by ncols matrix and return it */
 matrix_int alloc_matrix_int(size_t nrows, size_t ncols)
 {
-  int i;
+  int i, j;
   matrix_int matrix;
   matrix.nrows = nrows;
   matrix.ncols = ncols;
   matrix.data = malloc(nrows * sizeof(int *));
   for (i = 0; i < nrows; i++) {
     matrix.data[i] = malloc(ncols * sizeof(int));
+    for (j = 0; j < ncols; j++) {
+      matrix.data[i][j] = 0;
+    }
   }
   return matrix;
 }
