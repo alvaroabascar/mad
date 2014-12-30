@@ -1,31 +1,28 @@
 #include <stdio.h>
 #include <matrix.h>
 #include <gaussjbs.h>
+#include <stdlib.h>
 
 void print_a_b(matrix_double, matrix_double);
 
 int main(int argc, char *argv[])
 {
+  int i, j;
   matrix_double A, B;
   A = alloc_matrix_double(3, 3);
   B = alloc_matrix_double(3, 2);
-  A.data[0][0] = 1;
-  A.data[0][1] = 2;
-  A.data[0][2] = 3;
-  A.data[1][0] = 4;
-  A.data[1][1] = 5;
-  A.data[1][2] = 6;
-  A.data[2][0] = 7;
-  A.data[2][1] = 0;
-  A.data[2][2] = 9;
+  srand(100);
+  for (i = 0; i < A.nrows; i++) {
+    for (j = 0; j < A.ncols; j++) {
+      A.data[i][j] = (double) rand();
+    }
+  }
 
-  B.data[0][0] = 14;
-  B.data[1][0] = 32;
-  B.data[2][0] = 34;
-  B.data[0][1] = 28;
-  B.data[1][1] = 64;
-  B.data[2][1] = 68;
-
+  for (i = 0; i < A.nrows; i++) {
+    for (j = 0; j < A.ncols; j++) {
+      B.data[i][0] += A.data[i][j] * (j + 1);
+    }
+  }
   printf("before gaussj:\n");
   print_a_b(A, B);
   gaussjbs(&A, &B);
