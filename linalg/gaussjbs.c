@@ -2,7 +2,7 @@
 #include <matrix.h>
 #include <gaussjbs.h>
 
-/* Gauss-Jordan elimination with full pivoting */
+/* Gauss-Jordan elimination with partial implicit pivoting */
 
 #define abs(x) ((x > 0 ? x : -x))
 
