@@ -131,3 +131,18 @@ struct coordinate find_best_pivot_column(matrix_double *A, int pos,
   }
   return best_pivot;
 }
+
+struct coordinate find_best_pivot_column2(matrix_double *A, int pos,
+                                         double *scaling)
+{
+  int i;
+  double max_pivot_val = abs(A->data[pos][pos]);
+  struct coordinate best_pivot = { .row = pos, .col = pos };
+  for (i = pos; i < A->nrows; i++) {
+    if (abs(A->data[i][pos]) / scaling[i] > max_pivot_val) {
+      max_pivot_val = abs(A->data[i][pos]) / scaling[i];
+      best_pivot.row = i;
+    }
+  }
+  return best_pivot;
+}

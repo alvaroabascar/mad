@@ -1,6 +1,6 @@
 SRC_DIR := /home/alvaro/Repos/mad/
 
-progs = test_gaussj test_gaussj_bs test_pivoting
+progs = test_gaussj test_gaussj_bs
 
 CC = gcc
 
@@ -15,8 +15,6 @@ all: $(progs)
 test_gaussj: $(DEPS_GAUSSJ)
 
 test_gaussj_bs: $(DEPS_GAUSSJBS)
-
-test_pivoting: $(DEPS_GAUSSJBS)
 
 clean:
 	rm $(progs) $(DEPS_GAUSSJ) $(DEPS_GAUSSJBS)

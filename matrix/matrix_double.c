@@ -150,13 +150,10 @@ void add_to_row_matrix_double(matrix_double *matrix, int row,
 void interchange_rows_matrix_double(matrix_double *matrix,
                                         int rowA, int rowB)
 {
-  int i;
-  double tmp;
-  for (i = 0; i < matrix->ncols; i++) {
-    tmp = matrix->data[rowA][i];
-    matrix->data[rowA][i] = matrix->data[rowB][i];
-    matrix->data[rowB][i] = tmp;
-  }
+  double *tmp;
+  tmp = matrix->data[rowA];
+  matrix->data[rowA] = matrix->data[rowB];
+  matrix->data[rowB] = tmp;
 }
 
 /* interchange_cols_matrix_double:
