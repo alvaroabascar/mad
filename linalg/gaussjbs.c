@@ -6,8 +6,10 @@
 
 #define abs(x) ((x > 0 ? x : -x))
 
-void do_partial_pivoting(matrix_double *A, matrix_double *B, int i);
-struct coordinate find_best_pivot_column(matrix_double *A, int i);
+void do_partial_pivoting(matrix_double *A, matrix_double *B, int i,
+                         double *scaling);
+struct coordinate find_best_pivot_column(matrix_double *A, int i,
+                                         double *scaling);
 
 /* Given a matrix of coefficients (A), and a matrix of right-hand sides (B),
  * which compose a system of equations A*x = B, perform a gauss-jordan
@@ -37,6 +39,11 @@ void gaussjbs(matrix_double *A, matrix_double *B)
    double current_row_B[B->ncols];
    double row_to_substract_A[A->ncols];
    double row_to_substract_B[B->ncols];
+   /* keep track of max value in each row, to do implicit pivoting */
+   double scaling[A->nrows];
+   for (i = 0; i < A->nrows; i++) {
+     scaling[i] = maximum_vector_double(A->ncols, A->data[i]);
+   }
 
    /* I use this to delimitate a section of the matrix, so that I
     * can easily divide only the elements at the right at the pivot, and
@@ -48,7 +55,7 @@ void gaussjbs(matrix_double *A, matrix_double *B)
      /* 1. place in the diagonal the best (largest) element found in either
       * below in the same column
       */
-     do_partial_pivoting(A, B, i);
+     do_partial_pivoting(A, B, i, scaling);
      pivot = A->data[i][i];
      /* 2. divide this row by the pivot */
      /* 2.1 do it in A (we skip elements at left of pivot, which are zero) */
@@ -98,9 +105,9 @@ void gaussjbs(matrix_double *A, matrix_double *B)
 /* Perform the pivoting process: look for the best pivot and then
  * interchange the rows accordingly. (Only partial pivoting)
  */
-void do_partial_pivoting(matrix_double *A, matrix_double *B, int i)
+void do_partial_pivoting(matrix_double *A, matrix_double *B, int i, double *scaling)
 {
-  struct coordinate pivot = find_best_pivot_column(A, i);
+  struct coordinate pivot = find_best_pivot_column(A, i, scaling);
   /* if we need to interchange rows */
   if (pivot.row > i) {
     /* interchange rows in A and B*/
@@ -113,19 +120,16 @@ void do_partial_pivoting(matrix_double *A, matrix_double *B, int i)
  * this function finds the best (largest) pivot, which is returned in a
  * struct coordinate {row, col}
  */
-struct coordinate find_best_pivot_column(matrix_double *A, int pos)
+struct coordinate find_best_pivot_column(matrix_double *A, int pos, double *scaling)
 {
-  int i, j;
+  int i;
   double max_pivot_val = abs(A->data[pos][pos]);
   struct coordinate best_pivot = { .row = pos, .col = pos };
   for (i = pos; i < A->nrows; i++) {
-    for (j = pos; j == pos; j++) {
-    //for (j = pos; j < A->ncols; j++) {
-      if (abs(A->data[i][j]) > max_pivot_val) {
-        max_pivot_val = abs(A->data[i][j]);
-        best_pivot.row = i;
-        best_pivot.col = j;
-      }
+    if ( (abs(A->data[i][pos]) / scaling[i]) > max_pivot_val) {
+      max_pivot_val = abs(A->data[i][pos]) / scaling[i];
+      best_pivot.row = i;
+      best_pivot.col = pos;
     }
   }
   return best_pivot;
