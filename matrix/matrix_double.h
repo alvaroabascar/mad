@@ -29,6 +29,7 @@ void interchange_rows_matrix_double(matrix_double *matrix, int rowA, int rowB);
 void interchange_cols_matrix_double(matrix_double *matrix, int colA, int colB);
 void copy_vector_double(int len, double *source, double *dest);
 void multiply_vector_double(int len, double *vector, double k);
+double absmax_vector_double(int len, double *vector);
 
 
 

@@ -19,7 +19,11 @@
 void ludcmp(matrix_double *A, int *changes, int *d)
 {
   int i, j, k;
-  // double scaling[A->nrows];
+  double scaling[A->nrows];
+
+  for (j = 0; j < A->ncols; j++) {
+    scaling[j] = absmax_vector_double(A->nrows, A->data[j]);
+  }
 
   for (j = 0; j < A->ncols; j++) {
     for (i = 0; i <= j; i++) {

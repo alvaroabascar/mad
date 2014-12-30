@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "matrix_double.h"
 
+#define max(x) ((x > 0) ? x : -x)
+
 /* allocate enough space for a nrows by ncols matrix and return it */
 matrix_double alloc_matrix_double(size_t nrows, size_t ncols)
 {
@@ -184,5 +186,15 @@ void multiply_vector_double(int len, double *vector, double k)
   int i;
   for (i = 0; i < len; i++) {
     vector[i] *= k;
+  }
+}
+
+double absmax_vector_double(int len, double *vector)
+{
+  double max = 0;
+  while (len-- > 0) {
+    if (abs(vector[len]) > max) {
+      max = vector[len];
+    }
   }
 }
