@@ -120,14 +120,13 @@ void do_partial_pivoting(matrix_double *A, matrix_double *B, int i,
 struct coordinate find_best_pivot_column(matrix_double *A, int pos,
                                          double *scaling)
 {
-  int i, j;
+  int i;
   double max_pivot_val = abs(A->data[pos][pos]);
   struct coordinate best_pivot = { .row = pos, .col = pos };
   for (i = pos; i < A->nrows; i++) {
-    if (abs(A->data[i][pos]) > max_pivot_val) {
-      max_pivot_val = abs(A->data[i][pos]);
+    if (abs(A->data[i][pos]) / scaling[i] > max_pivot_val) {
+      max_pivot_val = abs(A->data[i][pos]) / scaling[i];
       best_pivot.row = i;
-      best_pivot.col = pos;
     }
   }
   return best_pivot;
