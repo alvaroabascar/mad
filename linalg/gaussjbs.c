@@ -102,7 +102,7 @@ void do_partial_pivoting(matrix_double *A, matrix_double *B, int i)
 {
   struct coordinate pivot = find_best_pivot_column(A, i);
   /* if we need to interchange rows */
-  if (pivot.row > i && pivot.col == i) {
+  if (pivot.row > i) {
     /* interchange rows in A and B*/
     interchange_rows_matrix_double(A, i, pivot.row);
     interchange_rows_matrix_double(B, i, pivot.row);
