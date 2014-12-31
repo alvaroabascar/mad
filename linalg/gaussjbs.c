@@ -7,11 +7,6 @@
 
 #define abs(x) ((x > 0 ? x : -x))
 
-void do_partial_pivoting(matrix_double *A, matrix_double *B, int i,
-                                           double *scaling);
-struct coordinate find_best_pivot_column(matrix_double *A, int i,
-                                         double *scaling);
-
 /* Given a matrix of coefficients (A), and a matrix of right-hand sides (B),
  * which compose a system of equations A*x = B, perform a gauss-jordan
  * elimination to produce the inverse of A and the matrix of solutions X.

@@ -10,6 +10,12 @@ struct coordinate find_best_pivot_column(matrix_double *A, int pos,
   int i;
   double max_pivot_val = abs(A->data[pos][pos]);
   struct coordinate best_pivot = { .row = pos, .col = pos };
+  // no implicit pivoting
+  if (scaling == NULL) {
+    for (i = 0; i < A->nrows; i++) {
+      scaling[i] = 1;
+    }
+  }
   for (i = pos; i < A->nrows; i++) {
     if (abs(A->data[i][pos]) / scaling[i] > max_pivot_val) {
       max_pivot_val = abs(A->data[i][pos]) / scaling[i];
@@ -50,9 +56,11 @@ void do_partial_pivoting(matrix_double *A, matrix_double *B, int i,
   struct coordinate pivot = find_best_pivot_column(A, i, scaling);
   /* if we need to interchange rows */
   if (pivot.row > i && pivot.col == i) {
-    /* interchange rows in A and B*/
+    /* interchange rows in A (and B if B != NULL)*/
     interchange_rows_matrix_double(A, i, pivot.row);
-    interchange_rows_matrix_double(B, i, pivot.row);
+    if (B) {
+      interchange_rows_matrix_double(B, i, pivot.row);
+    }
   }
 }
 

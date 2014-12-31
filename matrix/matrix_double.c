@@ -197,4 +197,5 @@ double absmax_vector_double(int len, double *vector)
       max = vector[len];
     }
   }
+  return max;
 }
