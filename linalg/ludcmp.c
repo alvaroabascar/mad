@@ -20,10 +20,12 @@
 void ludcmp(matrix_double *A, int *changes, int *d)
 {
   int i, j, k;
+  *d = 0;
 
   /* keep track of the scale of each row (for implicit pivoting) */
   double scaling[A->nrows];
   for (j = 0; j < A->ncols; j++) {
+    changes[j] = j;
     scaling[j] = absmax_vector_double(A->nrows, A->data[j]);
   }
 
@@ -41,11 +43,12 @@ void ludcmp(matrix_double *A, int *changes, int *d)
         A->data[i][j] -= A->data[i][k] * A->data[k][j];
       }
     }
-    do_partial_pivoting(A, NULL, j, scaling, changes);
+    d += do_partial_pivoting(A, NULL, j, scaling, changes);
     for (i = j + 1; i < A->ncols; i++) {
       A->data[i][j] /= A->data[j][j];
     }
   }
+  *d %= 2;
 }
 
 /* Given a LU decomposed matrix "LU", a matrix of right-hand sides "B", an

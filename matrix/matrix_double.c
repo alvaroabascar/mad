@@ -32,6 +32,19 @@ void free_matrix_double(matrix_double *matrix)
   free(matrix->data);
 }
 
+matrix_double copy_matrix_double(matrix_double matrix)
+{
+  int i, j;
+  matrix_double new_matrix = alloc_matrix_double(matrix.nrows,
+                                                 matrix.ncols);
+  for (i = 0; i < matrix.nrows; i++) {
+    for (j = 0; j < matrix.ncols; j++) {
+      new_matrix.data[i][j] = matrix.data[i][j];
+    }
+  }
+  return new_matrix;
+}
+
 /* print_matrix_double:
  * take a pointer to a matrix and a format string used to print each
  * element, and print it!
@@ -91,9 +104,14 @@ void interchange_array_elements_double(int *array, int i, int j)
   array[j] = tmp;
 }
 
-void reorder_matrix_rows_double(matrix_double *matrix, int *orders)
+void reorder_matrix_rows_double(matrix_double *matrix, int *orders_arg)
 {
   int i;
+  int orders[matrix->nrows];
+  /* make copy of orders_arg to avoid destroying the original */
+  for (i = 0; i < matrix->nrows; i++) {
+    orders[i] = orders_arg[i];
+  }
   for (i = 0; i < matrix->nrows; i++) {
     while (orders[i] != i) {
       interchange_rows_matrix_double(matrix, i, orders[i]);

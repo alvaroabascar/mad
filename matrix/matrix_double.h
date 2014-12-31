@@ -10,6 +10,7 @@ typedef struct {
 } matrix_double;
 
 matrix_double alloc_matrix_double(size_t nrows, size_t ncols);
+matrix_double copy_matrix_double(matrix_double matrix);
 void free_matrix_double(matrix_double *matrix);
 void print_matrix_double(matrix_double matrix);
 void multiply_section_matrix_double(matrix_double *matrix,
