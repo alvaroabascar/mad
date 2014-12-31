@@ -86,14 +86,14 @@ void gaussjbs(matrix_double *A, matrix_double *B)
      }
    }
    /* backsubstitution */
-   for (j = A->nrows - 1; j >= 0; j--) {
+   for (i = A->nrows - 1; i >= 0; i--) {
      multiply_vector_double(B->ncols, current_row_B, 0); // set to zero
-     for (i = A->ncols - 1; i > j; i--) {
+     for (j = A->ncols - 1; j > i; j--) {
        for (k = 0; k < B->ncols; k++) {
-         current_row_B[k] -= B->data[i][k] * A->data[j][i];
+         current_row_B[k] -= B->data[j][k] * A->data[i][j];
        }
      }
-     add_to_row_matrix_double(B, j, current_row_B);
-     multiply_row_matrix_double(B, j, 1 / A->data[j][j]);
+     add_to_row_matrix_double(B, i, current_row_B);
+     multiply_row_matrix_double(B, i, 1 / A->data[i][i]);
    }
 }
