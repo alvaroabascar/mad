@@ -52,7 +52,7 @@ void gaussj(matrix_double *A, matrix_double *B)
      /* 1. place in the diagonal the best (largest) element found in either
       * below in the same column or at the right in the same row, keeping
       * track of the column interchanges, if any. */
-     do_pivoting(A, B, i, col_changes);
+     do_full_pivoting(A, B, i, col_changes);
      pivot = A->data[i][i];
      /* 2. divide this row by the pivot */
      /* 2.1 do it in A (we skip elements at left of pivot, which are zero) */

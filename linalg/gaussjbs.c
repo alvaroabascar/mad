@@ -51,7 +51,7 @@ void gaussjbs(matrix_double *A, matrix_double *B)
      /* 1. place in the diagonal the best (largest) element found in either
       * below in the same column
       */
-     do_partial_pivoting(A, B, i, scaling);
+     do_partial_pivoting(A, B, i, scaling, NULL);
      pivot = A->data[i][i];
      /* 2. divide this row by the pivot */
      /* 2.1 do it in A (we skip elements at left of pivot, which are zero) */

@@ -36,7 +36,9 @@ void ludcmp(matrix_double *A, int *changes, int *d)
       for (k = 0; k < j; k++) {
         A->data[i][j] -= A->data[i][k] * A->data[k][j];
       }
-      do_partial_pivoting(A, NULL, i, scaling);
+    }
+    do_partial_pivoting(A, NULL, j, scaling, changes);
+    for (i = j + 1; i < A->ncols; i++) {
       A->data[i][j] /= A->data[j][j];
     }
   }

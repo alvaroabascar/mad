@@ -49,26 +49,34 @@ struct coordinate find_best_pivot(matrix_double *A, int pos)
 
 /* Perform the pivoting process: look for the best pivot and then
  * interchange the rows accordingly. (Only partial pivoting)
+ * If two rows are interchanged: return 1, else return 0
  */
-void do_partial_pivoting(matrix_double *A, matrix_double *B, int i,
-                                           double *scaling)
+int do_partial_pivoting(matrix_double *A, matrix_double *B, int i,
+                                           double *scaling,
+                                           int *row_changes)
 {
   struct coordinate pivot = find_best_pivot_column(A, i, scaling);
   /* if we need to interchange rows */
-  if (pivot.row > i && pivot.col == i) {
+  if (pivot.row > i) {
     /* interchange rows in A (and B if B != NULL)*/
     interchange_rows_matrix_double(A, i, pivot.row);
     if (B) {
       interchange_rows_matrix_double(B, i, pivot.row);
     }
+    if (row_changes) {
+      interchange_array_elements_int(row_changes, i, pivot.row);
+    }
+    return 1;
   }
+  return 0;
 }
 
 /* perform the pivoting process: look for the best pivot and then
  * interchange the rows or columns accordingly. Increase num_changes 
  * if two columns have been interchanged
  */
-void do_pivoting(matrix_double *A, matrix_double *B, int i, int *col_changes)
+void do_full_pivoting(matrix_double *A, matrix_double *B, int i,
+                      int *col_changes)
 {
   struct coordinate pivot = find_best_pivot(A, i);
   /* if we need to interchange columns */
