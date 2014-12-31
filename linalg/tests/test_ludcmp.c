@@ -29,13 +29,13 @@ int main(int argc, char *argv[])
   printf("before ludcmp:\n");
   print_a_b(A, B);
   ludcmp(&A, changes, &d);
-  lusolve(&A, &B, changes, &d);
+  lusolve(&A, &B, changes);
   printf("after ludcmp:\n");
   print_a_b(A, B);
   free_matrix_double(&B);
   printf("before ludcmp:\n");
   print_a_b(A, B_copy);
-  lusolve(&A, &B_copy, changes, &d);
+  lusolve(&A, &B_copy, changes);
   printf("after ludcmp:\n");
   print_a_b(A, B_copy);
   return 0;

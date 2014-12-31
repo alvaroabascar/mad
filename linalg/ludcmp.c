@@ -66,7 +66,7 @@ void ludcmp(matrix_double *A, int *changes, int *d)
  * And then solving for x such that:
  *  U x = y (solved by backward substitution)
  */
-void lusolve(matrix_double *LU, matrix_double *B, int *changes, int *d)
+void lusolve(matrix_double *LU, matrix_double *B, int *changes)
 {
   int i, j, k;
   double row[B->ncols];
