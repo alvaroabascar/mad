@@ -19,7 +19,7 @@ void multiply_section_matrix_double(matrix_double *matrix,
 void add_to_section_matrix_double(matrix_double *matrix,
                                   struct pair_coordinates section,
                                   double k);
-void interchange_array_elements_double(int *array, int i, int j);
+void interchange_array_elements_double(double *array, int i, int j);
 void reorder_matrix_rows_double(matrix_double *matrix, int *orders);
 void multiply_row_matrix_double(matrix_double *matrix, int row, double k);
 void multiply_matrix_double(matrix_double *matrix, double k);
