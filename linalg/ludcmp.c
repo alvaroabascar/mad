@@ -50,7 +50,6 @@ int ludcmp(matrix_double *A, int *changes, int *d)
       fprintf(stderr, "ludcmp: matrix is singular\n");
       return -1;
     }
-    printf("dividing by %.2f\n", A->data[j][j]);
     for (i = j + 1; i < A->ncols; i++) {
       A->data[i][j] /= A->data[j][j];
     }
