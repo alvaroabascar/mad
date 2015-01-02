@@ -66,6 +66,9 @@ int do_partial_pivoting(matrix_double *A, matrix_double *B, int i,
     if (row_changes) {
       interchange_array_elements_int(row_changes, i, pivot.row);
     }
+    if (scaling) {
+      interchange_array_elements_double(scaling, i, pivot.row);
+    }
     return 1;
   }
   return 0;
