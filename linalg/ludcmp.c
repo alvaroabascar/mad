@@ -2,20 +2,21 @@
 #include "pivoting.c"
 
 /* Given a matrix A, this routine replaces it by its LU decomposition.
- * d is modified to store the number of row interchanges.
- *     - If d is 1, the number of interchanges is odd.
- *     - If d is 0, the number of interchanges is even.
  *
- * This function uses the Crout's algorithm, with implicit pivoting.
+ * d is modified to store the parity of row interchanges.
+ *     - If d is -1, the number of interchanges is odd.
+ *     - If d is +1, the number of interchanges is even.
+ *
+ * This function uses the Crout's algorithm with implicit pivoting.
  *
  * The matrix L has diagonal elements equal to 1. These can be obviated, and
- * we store both L and U in the original matrix A.
+ * both L and U are stored in the original matrix A.
  *
- * The implicit pivoting implies that the resulting LU is the decomposition
+ * The partial pivoting implies that the resulting LU is the decomposition
  * of a row-wise permutation of A. The permutations are stored in the
  * array "changes". E.g. if only rows 1 and 3 are interchanged, then
  * changes[1] = 3, changes[3] = 1, and changes[i] = i for every i != 1 and
- * != 3.
+ * i != 3.
  */
 void ludcmp(matrix_double *A, int *changes, int *d)
 {
@@ -44,11 +45,13 @@ void ludcmp(matrix_double *A, int *changes, int *d)
       }
     }
     d += do_partial_pivoting(A, NULL, j, scaling, changes);
+    printf("dividing by %.2f\n", A->data[j][j]);
     for (i = j + 1; i < A->ncols; i++) {
       A->data[i][j] /= A->data[j][j];
     }
   }
-  *d %= 2;
+  *d %= 2; /* 0 if even, 1 if odd */
+  *d = 1 - (*d * 2); /* 1 if even, -1 if odd */
 }
 
 /* Given a LU decomposed matrix "LU", a matrix of right-hand sides "B", an
