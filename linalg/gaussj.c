@@ -2,7 +2,7 @@
 #include <matrix.h>
 #include "pivoting.c"
 
-/* Gauss-Jordan elimination with full pivoting */
+/* Gauss-Jordan elimination with implicit partial pivoting */
 
 #define abs(x) ((x > 0 ? x : -x))
 
@@ -11,7 +11,7 @@
  * elimination to produce the inverse of A and the matrix of solutions X.
  *
  * Note: B might be a n by 1 matrix (a vector) or a n x m matrix. This last
- * case is equivalent to solving m systems of equations.
+ * case is equivalent to solving the m systems of equations.
  */
 int gaussj(matrix_double *A, matrix_double *B)
 {
@@ -41,9 +41,9 @@ int gaussj(matrix_double *A, matrix_double *B)
 
    /* for each element in the diagonal... */
    for (i = 0; i < A->nrows; i++) {
-     /* 1. place in the diagonal the best (largest) element found in either
-      * below in the same column or at the right in the same row, keeping
-      * track of the column interchanges, if any. */
+     /* 1. place in the diagonal the best (largest) element found in the
+      * same column (partial pivoting)
+      */
      do_partial_pivoting(A, B, i, scaling, NULL);
      pivot = A->data[i][i];
      if (pivot == 0) {
@@ -53,7 +53,6 @@ int gaussj(matrix_double *A, matrix_double *B)
      /* 2. divide this row by the pivot */
      /* 2.1 do it in A (we skip elements at left of pivot, which are zero) */
      A->data[i][i] = 1;
-     
      multiply_row_matrix_double(A, i, 1/pivot);
      /* 2.2 do it in B. In this case do it with the whole row */
      multiply_row_matrix_double(B, i, 1/pivot);
