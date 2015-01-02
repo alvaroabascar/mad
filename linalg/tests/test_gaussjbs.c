@@ -47,13 +47,13 @@ int main(int argc, char *argv[])
 
 void solve(matrix_double A, matrix_double B)
 {
-  printf("before gaussj:\n");
+  printf("before gaussjbs:\n");
   printf("A:\n");
   print_matrix_double(A);
   printf("B:\n");
   print_matrix_double(B);
   if (! gaussjbs(&A, &B) ) {
-    printf("after gaussj:\n");
+    printf("after gaussjbs:\n");
     printf("A:\n");
     print_matrix_double(A);
     printf("B:\n");
