@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "matrix_int.h"
 
+#define max(x) ((x > 0) ? x : -x)
+
 /* allocate enough space for a nrows by ncols matrix and return it */
 matrix_int alloc_matrix_int(size_t nrows, size_t ncols)
 {
@@ -28,6 +30,19 @@ void free_matrix_int(matrix_int *matrix)
   }
   /* free data */
   free(matrix->data);
+}
+
+matrix_int copy_matrix_int(matrix_int matrix)
+{
+  int i, j;
+  matrix_int new_matrix = alloc_matrix_int(matrix.nrows,
+                                                 matrix.ncols);
+  for (i = 0; i < matrix.nrows; i++) {
+    for (j = 0; j < matrix.ncols; j++) {
+      new_matrix.data[i][j] = matrix.data[i][j];
+    }
+  }
+  return new_matrix;
 }
 
 /* print_matrix_int:
@@ -89,9 +104,14 @@ void interchange_array_elements_int(int *array, int i, int j)
   array[j] = tmp;
 }
 
-void reorder_matrix_rows_int(matrix_int *matrix, int *orders)
+void reorder_matrix_rows_int(matrix_int *matrix, int *orders_arg)
 {
   int i;
+  int orders[matrix->nrows];
+  /* make copy of orders_arg to avoid destroying the original */
+  for (i = 0; i < matrix->nrows; i++) {
+    orders[i] = orders_arg[i];
+  }
   for (i = 0; i < matrix->nrows; i++) {
     while (orders[i] != i) {
       interchange_rows_matrix_int(matrix, i, orders[i]);
@@ -150,13 +170,10 @@ void add_to_row_matrix_int(matrix_int *matrix, int row,
 void interchange_rows_matrix_int(matrix_int *matrix,
                                         int rowA, int rowB)
 {
-  int i;
-  int tmp;
-  for (i = 0; i < matrix->ncols; i++) {
-    tmp = matrix->data[rowA][i];
-    matrix->data[rowA][i] = matrix->data[rowB][i];
-    matrix->data[rowB][i] = tmp;
-  }
+  int *tmp;
+  tmp = matrix->data[rowA];
+  matrix->data[rowA] = matrix->data[rowB];
+  matrix->data[rowB] = tmp;
 }
 
 /* interchange_cols_matrix_int:
@@ -188,4 +205,15 @@ void multiply_vector_int(int len, int *vector, int k)
   for (i = 0; i < len; i++) {
     vector[i] *= k;
   }
+}
+
+int absmax_vector_int(int len, int *vector)
+{
+  int max = 0;
+  while (len-- > 0) {
+    if (abs(vector[len]) > max) {
+      max = vector[len];
+    }
+  }
+  return max;
 }
