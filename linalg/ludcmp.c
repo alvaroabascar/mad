@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <matrix.h>
 #include "pivoting.c"
 
@@ -18,7 +19,7 @@
  * changes[1] = 3, changes[3] = 1, and changes[i] = i for every i != 1 and
  * i != 3.
  */
-void ludcmp(matrix_double *A, int *changes, int *d)
+int ludcmp(matrix_double *A, int *changes, int *d)
 {
   int i, j, k;
   *d = 0;
@@ -45,6 +46,10 @@ void ludcmp(matrix_double *A, int *changes, int *d)
       }
     }
     d += do_partial_pivoting(A, NULL, j, scaling, changes);
+    if (A->data[j][j] == 0) {
+      fprintf(stderr, "ludcmp: matrix is singular\n");
+      return -1;
+    }
     printf("dividing by %.2f\n", A->data[j][j]);
     for (i = j + 1; i < A->ncols; i++) {
       A->data[i][j] /= A->data[j][j];
@@ -52,6 +57,7 @@ void ludcmp(matrix_double *A, int *changes, int *d)
   }
   *d %= 2; /* 0 if even, 1 if odd */
   *d = 1 - (*d * 2); /* 1 if even, -1 if odd */
+  return 0;
 }
 
 /* Given a LU decomposed matrix "LU", a matrix of right-hand sides "B", an
