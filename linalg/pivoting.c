@@ -12,6 +12,7 @@ struct coordinate find_best_pivot_column(matrix_double *A, int pos,
   struct coordinate best_pivot = { .row = pos, .col = pos };
   // no implicit pivoting
   if (scaling == NULL) {
+    double scaling[A->nrows];
     for (i = 0; i < A->nrows; i++) {
       scaling[i] = 1;
     }
@@ -50,6 +51,17 @@ struct coordinate find_best_pivot(matrix_double *A, int pos)
 /* Perform the pivoting process: look for the best pivot and then
  * interchange the rows accordingly. (Only partial pivoting)
  * If two rows are interchanged: return 1, else return 0
+ *
+ * - A is the matrix on which pivoting is performed.
+ * - B is another matrix on which the same pivoting as in A will be done. If
+ *   it is NULL, B is ignored.
+ * - i is the row and column of the pivot: pivot = A[i][i]
+ * - scaling[A->nrows] is an array containing the scale (largest element) of
+ *   each row. It is used to do implicit (sclaed) pivoting. Normal pivoting
+ *   can be done passing NULL.
+ * - row_changes[A->nrows] is an array whose elements will be interchanged
+ *   to keep track of the pivoting. E.g. if row i and j are interchanged in
+ *   A, elements i and j will be interchanged in row_changes.
  */
 int do_partial_pivoting(matrix_double *A, matrix_double *B, int i,
                                            double *scaling,
@@ -65,6 +77,11 @@ int do_partial_pivoting(matrix_double *A, matrix_double *B, int i,
     }
     if (row_changes) {
       interchange_array_elements_int(row_changes, i, pivot.row);
+    }
+    if (scaling) {
+      interchange_array_elements_double(scaling, i, pivot.row);
+    }
+
     }
     return 1;
   }
