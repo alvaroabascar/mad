@@ -34,17 +34,9 @@ int gaussj(matrix_double *A, matrix_double *B)
    double current_row_B[B->ncols];
    double row_to_substract_A[A->ncols];
    double row_to_substract_B[B->ncols];
-   /* keep track of column interchanges */
-   int col_changes[A->ncols];
-   int col_changes_copy[A->ncols];
-   /* currently all cols are in the original state:
-    * col_changes[0] = 0, col_changes[1] = 1, etc.
-    * If at some point col 0 and 1 are interchanged, this will
-    * be stored in the array as:
-    * col_changes[0] = 1, col_changes[1] = 0.
-    */
-   for(i = 0; i < A->ncols; i++) {
-     col_changes[i] = i;
+   double scaling[A->nrows];
+   for (i = 0; i < A->nrows; i++) {
+     scaling[i] = absmax_vector_double(A->ncols, A->data[i]);
    }
 
    /* for each element in the diagonal... */
@@ -52,7 +44,7 @@ int gaussj(matrix_double *A, matrix_double *B)
      /* 1. place in the diagonal the best (largest) element found in either
       * below in the same column or at the right in the same row, keeping
       * track of the column interchanges, if any. */
-     do_full_pivoting(A, B, i, col_changes);
+     do_partial_pivoting(A, B, i, scaling, NULL);
      pivot = A->data[i][i];
      if (pivot == 0) {
        fprintf(stderr, "gaussj: singular matrix\n");
@@ -89,9 +81,5 @@ int gaussj(matrix_double *A, matrix_double *B)
        add_to_row_matrix_double(B, j, row_to_substract_B);
      }
    }
-   /* unscramble solution using col_changes as the guide */
-   copy_vector_int(A->ncols, col_changes, col_changes_copy);
-   reorder_matrix_rows_double(B, col_changes);
-   reorder_matrix_rows_double(A, col_changes_copy);
    return 0;
 }
