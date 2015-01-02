@@ -3,7 +3,8 @@
 #include <gaussjbs.h>
 #include <stdlib.h>
 
-void print_a_b(matrix_double, matrix_double);
+void solve(matrix_double A, matrix_double B);
+void fill_b(matrix_double *A, matrix_double *B);
 
 int main(int argc, char *argv[])
 {
@@ -17,24 +18,55 @@ int main(int argc, char *argv[])
       A.data[i][j] = (double) rand();
     }
   }
+  fill_b(&A, &B);
 
-  for (i = 0; i < A.nrows; i++) {
-    for (j = 0; j < A.ncols; j++) {
-      B.data[i][0] += A.data[i][j] * (j + 1);
-    }
-  }
-  printf("before gaussj:\n");
-  print_a_b(A, B);
-  gaussjbs(&A, &B);
-  printf("after gaussj:\n");
-  print_a_b(A, B);
+  printf("********************************************\n");
+  printf("Trying a random system with solution 1, 2, 3\n");
+  printf("********************************************\n");
+  solve(A, B);
+
+  A.data[0][0] = 1;
+  A.data[0][1] = 2;
+  A.data[0][2] = 3;
+  A.data[1][0] = 4;
+  A.data[1][1] = 5;
+  A.data[1][2] = 6;
+  A.data[2][0] = 7;
+  A.data[2][1] = 8;
+  A.data[2][2] = 9;
+
+  fill_b(&A, &B);
+
+  printf("\n*****************************\n");
+  printf("Trying with a singular matrix\n");
+  printf("*****************************\n");
+  solve(A, B);
+
   return 0;
 }
 
-void print_a_b(matrix_double A, matrix_double B)
+void solve(matrix_double A, matrix_double B)
 {
+  printf("before gaussj:\n");
   printf("A:\n");
   print_matrix_double(A);
   printf("B:\n");
   print_matrix_double(B);
+  if (! gaussjbs(&A, &B) ) {
+    printf("after gaussj:\n");
+    printf("A:\n");
+    print_matrix_double(A);
+    printf("B:\n");
+    print_matrix_double(B);
+  }
+}
+
+void fill_b(matrix_double *A, matrix_double *B)
+{
+  int i, j;
+  for (i = 0; i < A->nrows; i++) {
+    for (j = 0; j < A->ncols; j++) {
+      B->data[i][0] += A->data[i][j] * (j + 1);
+    }
+  }
 }
