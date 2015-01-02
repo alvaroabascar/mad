@@ -48,18 +48,19 @@ int main(int argc, char *argv[])
 void solve(matrix_double A, matrix_double B)
 {
   int d, changes[A.nrows];
-  printf("before gaussj:\n");
+  printf("before ludcmp:\n");
   printf("A:\n");
   print_matrix_double(A);
   printf("B:\n");
   print_matrix_double(B);
-  ludcmp(&A,changes, &d);
-  lusolve(&A, &B, changes);
-  printf("after gaussj:\n");
-  printf("A:\n");
-  print_matrix_double(A);
-  printf("B:\n");
-  print_matrix_double(B);
+  if (! ludcmp(&A,changes, &d)) {
+    lusolve(&A, &B, changes);
+    printf("after ludcmp:\n");
+    printf("A:\n");
+    print_matrix_double(A);
+    printf("B:\n");
+    print_matrix_double(B);
+  }
 }
 
 void fill_b(matrix_double *A, matrix_double *B)

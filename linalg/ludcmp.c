@@ -47,7 +47,7 @@ int ludcmp(matrix_double *A, int *changes, int *d)
     }
     d += do_partial_pivoting(A, NULL, j, scaling, changes);
     if (A->data[j][j] == 0) {
-      fprintf(stderr, "ludcmp: matrix is singular\n");
+      fprintf(stderr, "ludcmp: singular matrix\n");
       return -1;
     }
     for (i = j + 1; i < A->ncols; i++) {
