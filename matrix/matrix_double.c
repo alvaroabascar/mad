@@ -96,9 +96,9 @@ void add_to_section_matrix_double(matrix_double *matrix,
   }
 }
 
-void interchange_array_elements_double(int *array, int i, int j)
+void interchange_array_elements_double(double *array, int i, int j)
 {
-  int tmp;
+  double tmp;
   tmp = array[i];
   array[i] = array[j];
   array[j] = tmp;
