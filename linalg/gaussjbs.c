@@ -14,7 +14,7 @@
  * Note: B might be a n by 1 matrix (a vector) or a n x m matrix. This last
  * case is equivalent to solving m systems of equations.
  */
-void gaussjbs(matrix_double *A, matrix_double *B)
+int gaussjbs(matrix_double *A, matrix_double *B)
 {
   /* Set i = 0
    * 1. Divide row i by pivot [i][i]
@@ -53,6 +53,10 @@ void gaussjbs(matrix_double *A, matrix_double *B)
       */
      do_partial_pivoting(A, B, i, scaling, NULL);
      pivot = A->data[i][i];
+     if (pivot == 0) {
+       fprintf(stderr, "gaussjbs: singular matrix\n");
+       return -1;
+     }
      /* 2. divide this row by the pivot */
      /* 2.1 do it in A (we skip elements at left of pivot, which are zero) */
      A->data[i][i] = 1;
@@ -96,4 +100,5 @@ void gaussjbs(matrix_double *A, matrix_double *B)
      add_to_row_matrix_double(B, i, current_row_B);
      multiply_row_matrix_double(B, i, 1 / A->data[i][i]);
    }
+   return 0;
 }
