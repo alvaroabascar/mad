@@ -87,7 +87,7 @@ void do_full_pivoting(matrix_double *A, matrix_double *B, int i,
     /* interchange columns in A */
     interchange_cols_matrix_double(A, i, pivot.col);
     /* and keep track of it */
-    interchange_array_elements_double(col_changes, i, pivot.col);
+    interchange_array_elements_int(col_changes, i, pivot.col);
   }
   /* if we need to interchange rows */
   if (pivot.row > i && pivot.col == i) {

@@ -115,7 +115,7 @@ void reorder_matrix_rows_double(matrix_double *matrix, int *orders_arg)
   for (i = 0; i < matrix->nrows; i++) {
     while (orders[i] != i) {
       interchange_rows_matrix_double(matrix, i, orders[i]);
-      interchange_array_elements_double(orders, i, orders[i]);
+      interchange_array_elements_int(orders, i, orders[i]);
     }
   }
 }
