@@ -13,7 +13,7 @@
  * Note: B might be a n by 1 matrix (a vector) or a n x m matrix. This last
  * case is equivalent to solving m systems of equations.
  */
-void gaussj(matrix_double *A, matrix_double *B)
+int gaussj(matrix_double *A, matrix_double *B)
 {
   /* Set i = 0
    * 1. Divide row i by pivot [i][i]
@@ -54,6 +54,10 @@ void gaussj(matrix_double *A, matrix_double *B)
       * track of the column interchanges, if any. */
      do_full_pivoting(A, B, i, col_changes);
      pivot = A->data[i][i];
+     if (pivot == 0) {
+       fprintf(stderr, "gaussj: singular matrix\n");
+       return -1;
+     }
      /* 2. divide this row by the pivot */
      /* 2.1 do it in A (we skip elements at left of pivot, which are zero) */
      A->data[i][i] = 1;
@@ -89,4 +93,5 @@ void gaussj(matrix_double *A, matrix_double *B)
    copy_vector_int(A->ncols, col_changes, col_changes_copy);
    reorder_matrix_rows_double(B, col_changes);
    reorder_matrix_rows_double(A, col_changes_copy);
+   return 0;
 }
