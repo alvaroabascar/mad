@@ -1,6 +1,6 @@
 SRC_DIR := /home/alvaro/Repos/mad/
 
-progs = test_gaussj test_gaussj_bs test_ludcmp
+progs = test_gaussj test_gaussjbs test_ludcmp
 
 CC = gcc
 
@@ -15,7 +15,7 @@ all: $(progs)
 
 test_gaussj: $(DEPS_GAUSSJ)
 
-test_gaussj_bs: $(DEPS_GAUSSJBS)
+test_gaussjbs: $(DEPS_GAUSSJBS)
 
 test_ludcmp: $(DEPS_LUDCMP)
 
