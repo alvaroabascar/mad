@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
   srand(100);
   for (i = 0; i < A.nrows; i++) {
     for (j = 0; j < A.ncols; j++) {
-      A.data[i][j] = (double) rand();
+      A.data[i][j] = (double) (rand() % 100);
     }
   }
   fill_b(&A, &B);
