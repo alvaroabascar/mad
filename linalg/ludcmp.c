@@ -108,3 +108,25 @@ void lusolve(matrix_double *LU, matrix_double *B, int *changes)
   reorder_matrix_rows_double(B, changes);
 }
 
+/* Return the determinant of a matrix, using its
+ * LU decomposition
+ */
+double determinant(matrix_double A)
+{
+  int i, d;
+  double det = 1;
+  int changes[A.nrows];
+  /* LU decomposition */
+  if (ludcmp(&A, changes, &d)) {
+    fprintf(stderr, "determinant: singular matrix\n");
+    return 0.0 / 0.0;
+  }
+  /* The determinant is the product of the diagonal elements */
+  for (i = 0; i < A.nrows; i++) {
+    det *= A.data[i][i];
+  }
+  /* If num of row interchanges was odd, the determinant is the
+   * opposite (d = -1), else d = 1
+   */
+  return det * d;
+}
