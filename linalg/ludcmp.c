@@ -59,10 +59,10 @@ int ludcmp(matrix_double *A, int *changes, int *d)
   return 0;
 }
 
-/* Given a LU decomposed matrix "LU", a matrix of right-hand sides "B", an
+/* Given a LU decomposed matrix "LU", a right-hand side vector "B", an
  * array containing the row changes "changes" and an integer "d" specifying
  * whether the number of changes is even (0) or odd (1), transform "B" into
- * a matrix of solutions.
+ * the vector of solutions
  *
  * Explanation:
  * Our system is of the form:
@@ -74,38 +74,28 @@ int ludcmp(matrix_double *A, int *changes, int *d)
  * And then solving for x such that:
  *  U x = y (solved by backward substitution)
  */
-void lusolve(matrix_double *LU, matrix_double *B, int *changes)
+void lusolve(matrix_double *LU, double *B, int *changes)
 {
-  int i, j, k;
-  double row[B->ncols];
+  int i, j;
 
   /* step 1: forward substitution. solve y for L y = b */
 
   for (i = 0; i < LU->nrows; i++) {
-    /* set array to zeros */
-    multiply_vector_double(B->ncols, row, 0);
     for (j = 0; j < i; j++) {
-      for (k = 0; k < B->ncols; k++) {
-        row[k] -= B->data[j][k] * LU->data[i][j];
-      }
+      B[i] -= B[j] * LU->data[i][j];
     }
-    add_to_row_matrix_double(B, i, row);
   }
 
   /* now B contains y */
   /* step 2: backward substitution, solve x for U x = y */
 
   for (i = LU->nrows - 1; i >= 0; i--) {
-    multiply_vector_double(B->ncols, row, 0); // set to zero
     for (j = LU->ncols - 1; j > i; j--) {
-      for (k = 0; k < B->ncols; k++) {
-        row[k] -= B->data[j][k] * LU->data[i][j];
-      }
+      B[i] -= B[j] * LU->data[i][j];
     }
-    add_to_row_matrix_double(B, i, row);
-    multiply_row_matrix_double(B, i, 1 / LU->data[i][j]);
+    B[i] /= LU->data[j][j];
   }
-  reorder_matrix_rows_double(B, changes);
+  reorder_array_double(LU->nrows, B, changes);
 }
 
 /* Return the determinant of a matrix, using its
