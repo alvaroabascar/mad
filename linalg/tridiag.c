@@ -34,7 +34,7 @@ void tridiag(int dim, double *a, double *b, double *c, double *d)
   b[dim-1] = 1;
   /* now all "a"s are zero, and we can do backsubstitution */
   /* note that the last row is all zeros but the last element (1) */
-  for (i = dim-2; i > 0; i--) {
+  for (i = dim-2; i >= 0; i--) {
     d[i] -= c[i] * d[i+1];
   }
 }
