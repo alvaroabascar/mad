@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "matrix_double.h"
-
 #define max(x) ((x > 0) ? x : -x)
 
 /* allocate enough space for a nrows by ncols matrix and return it */
@@ -60,6 +59,16 @@ void print_matrix_double(matrix_double matrix)
   }
 }
 
+void print_array_double(int len, double *array)
+{
+  int i;
+  printf("{");
+  for (i = 0; i < len; i++) {
+    printf("%10.4f%s", array[i], (i < len - 1) ? ", " : "}\n");
+  }
+}
+
+
 /* Given a matrix and two coordinates "start" and "end", multiply by k all the
  * elements in the matrix within the square delimited by "start" and "end"
  */
@@ -115,6 +124,22 @@ void reorder_matrix_rows_double(matrix_double *matrix, int *orders_arg)
   for (i = 0; i < matrix->nrows; i++) {
     while (orders[i] != i) {
       interchange_rows_matrix_double(matrix, i, orders[i]);
+      interchange_array_elements_int(orders, i, orders[i]);
+    }
+  }
+}
+
+void reorder_array_double(int len, double *array, int *orders_arg)
+{
+  int i;
+  int orders[len];
+  /* copy orders array to avoid destroying it */
+  for (i = 0; i < len; i++) {
+    orders[i] = orders_arg[i];
+  }
+  for (i = 0; i < len; i++) {
+    while (orders[i] != i) {
+      interchange_array_elements_double(array, i, orders[i]);
       interchange_array_elements_int(orders, i, orders[i]);
     }
   }
