@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "matrix_double.h"
-
 #define max(x) ((x > 0) ? x : -x)
 
 /* allocate enough space for a nrows by ncols matrix and return it */
@@ -104,6 +103,14 @@ void interchange_array_elements_double(double *array, int i, int j)
   array[j] = tmp;
 }
 
+void interchange_array_elements_double(double *array, int i, int j)
+{
+  double tmp;
+  tmp = array[i];
+  array[i] = array[j];
+  array[j] = tmp;
+}
+
 void reorder_matrix_rows_double(matrix_double *matrix, int *orders_arg)
 {
   int i;
@@ -115,6 +122,22 @@ void reorder_matrix_rows_double(matrix_double *matrix, int *orders_arg)
   for (i = 0; i < matrix->nrows; i++) {
     while (orders[i] != i) {
       interchange_rows_matrix_double(matrix, i, orders[i]);
+      interchange_array_elements_int(orders, i, orders[i]);
+    }
+  }
+}
+
+void reorder_array_double(int len, double *array, int *orders_arg)
+{
+  int i;
+  int orders[len];
+  /* copy orders array to avoid destroying it */
+  for (i = 0; i < len; i++) {
+    orders[i] = orders_arg[i];
+  }
+  for (i = 0; i < len; i++) {
+    while (orders[i] != i) {
+      interchange_array_elements_double(array, i, orders[i]);
       interchange_array_elements_int(orders, i, orders[i]);
     }
   }
