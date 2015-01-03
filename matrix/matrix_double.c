@@ -59,6 +59,16 @@ void print_matrix_double(matrix_double matrix)
   }
 }
 
+void print_array_double(int len, double *array)
+{
+  int i;
+  printf("{");
+  for (i = 0; i < len; i++) {
+    printf("%10.4f%s", array[i], (i < len - 1) ? ", " : "}\n");
+  }
+}
+
+
 /* Given a matrix and two coordinates "start" and "end", multiply by k all the
  * elements in the matrix within the square delimited by "start" and "end"
  */
@@ -93,14 +103,6 @@ void add_to_section_matrix_double(matrix_double *matrix,
       matrix->data[i][j] += k;
     }
   }
-}
-
-void interchange_array_elements_double(double *array, int i, int j)
-{
-  double tmp;
-  tmp = array[i];
-  array[i] = array[j];
-  array[j] = tmp;
 }
 
 void interchange_array_elements_double(double *array, int i, int j)
