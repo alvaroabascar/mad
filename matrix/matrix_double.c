@@ -29,6 +29,8 @@ void free_matrix_double(matrix_double *matrix)
   }
   /* free data */
   free(matrix->data);
+  matrix->nrows = 0;
+  matrix->ncols = 0;
 }
 
 matrix_double copy_matrix_double(matrix_double matrix)
