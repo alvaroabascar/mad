@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 void solve(matrix_double A, double *B);
-void fill_b(matrix_double *A, double *B);
+void fill_b(matrix_double A, double *B);
 
 int main(int argc, char *argv[])
 {
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
       A.data[i][j] = (double) (rand() % 100);
     }
   }
-  fill_b(&A, B);
+  fill_b(A, B);
 
   printf("********************************************\n");
   printf("Trying a random system with solution 1, 2, 3\n");
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   A.data[2][1] = 8;
   A.data[2][2] = 9;
 
-  fill_b(&A, B);
+  fill_b(A, B);
 
   printf("\n*****************************\n");
   printf("Trying with a singular matrix\n");
@@ -53,8 +53,8 @@ void solve(matrix_double A, double *B)
   print_matrix_double(A);
   printf("B:\n");
   print_array_double(A.nrows, B);
-  if (! ludcmp(&A,changes, &d)) {
-    lusolve(&A, B, changes);
+  if (! ludcmp(A,changes, &d)) {
+    lusolve(A, B, changes);
     printf("after ludcmp:\n");
     printf("A:\n");
     print_matrix_double(A);
@@ -63,12 +63,12 @@ void solve(matrix_double A, double *B)
   }
 }
 
-void fill_b(matrix_double *A, double *B)
+void fill_b(matrix_double A, double *B)
 {
   int i, j;
-  for (i = 0; i < A->nrows; i++) {
-    for (j = 0; j < A->ncols; j++) {
-      B[i] += A->data[i][j] * (j + 1);
+  for (i = 0; i < A.nrows; i++) {
+    for (j = 0; j < A.ncols; j++) {
+      B[i] += A.data[i][j] * (j + 1);
     }
   }
 }

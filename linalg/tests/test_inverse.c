@@ -14,15 +14,15 @@ int main(int argc, char *argv[])
   printf("********************************************\n");
   printf("Trying a random system with solution 1, 2, 3\n");
   printf("********************************************\n");
-  I = inverse(&A);
+  I = inverse(A);
 
   printf("A:\n");
   print_matrix_double(A);
   printf("I:\n");
   print_matrix_double(I);
 
-  free_matrix_double(&A);
-  free_matrix_double(&I);
+  free_matrix_double(A);
+  free_matrix_double(I);
   A = alloc_matrix_double(3, 3);
   A.data[0][0] = 1;
   A.data[0][1] = 2;
@@ -37,14 +37,14 @@ int main(int argc, char *argv[])
   printf("\n*****************************\n");
   printf("Trying with a singular matrix\n");
   printf("*****************************\n");
-  I = inverse(&A);
+  I = inverse(A);
   printf("A:\n");
   print_matrix_double(A);
   printf("I:\n");
   print_matrix_double(I);
 
-  free_matrix_double(&A);
-  free_matrix_double(&I);
+  free_matrix_double(A);
+  free_matrix_double(I);
 
   return 0;
 }
