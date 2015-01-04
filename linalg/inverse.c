@@ -1,17 +1,22 @@
-#include <ludcmp.h>
+#include <stdio.h>
 #include <matrix.h>
+#include <ludcmp.h>
 
-matrix_double inverse(matrix_double &M)
+matrix_double inverse(matrix_double *M)
 {
   int changes[M->nrows];
   int d, i;
   double col[M->nrows];
 
-  matrix_double Mcp = copy_matrix_double(M);
-  matrix_double inverse = alloc_matrix_double(Mcp->nrows, M->nrows);
+  matrix_double Mcp = copy_matrix_double(*M);
+  matrix_double inverse = alloc_matrix_double(M->nrows, M->nrows);
 
   /* Store in Mcp the LU decomposition of M */
-  ludcmp(Mcp, changes, &d);
+  if (ludcmp(&Mcp, changes, &d)) {
+    fprintf(stderr, "inverse: singular matrix\n");
+    free_matrix_double(&inverse);
+    return inverse;
+  }
 
   for (i = 0; i < M->ncols; i++) {
     /* create column i of the unit matrix */
@@ -20,14 +25,11 @@ matrix_double inverse(matrix_double &M)
     }
     col[i] = 1;
     /* find column i of the inverse */
-    lusolve(Mcp, col, changes);
+    lusolve(&Mcp, col, changes);
     /* fill inverse */
     for (d = 0; d < M->ncols; d++) {
-      inverse->data[i][d] = col[d];
+      inverse.data[i][d] = col[d];
     }
   }
   return inverse;
 }
-
-
-#endif /* __INVERSE_H__ */
