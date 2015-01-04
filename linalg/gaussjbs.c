@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <matrix.h>
 #include <gaussjbs.h>
-#include "pivoting.c"
+#include <pivoting.h>
 
 /* Gauss-Jordan elimination with partial implicit pivoting */
 

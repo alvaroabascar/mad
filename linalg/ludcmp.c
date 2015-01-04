@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <matrix.h>
-#include "pivoting.c"
+#include <pivoting.h>
 
 /* Given a matrix A, this routine replaces it by its LU decomposition.
  *

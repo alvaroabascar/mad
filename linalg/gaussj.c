@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <matrix.h>
-#include "pivoting.c"
+#include <pivoting.h>
 
 /* Gauss-Jordan elimination with implicit partial pivoting */
 

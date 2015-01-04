@@ -1,3 +1,5 @@
+#include <matrix.h>
+
 #define abs(x) ((x > 0 ? x : -x))
 
 /* Given a matrix A, and the position (i, j) for which a pivot is needed,
