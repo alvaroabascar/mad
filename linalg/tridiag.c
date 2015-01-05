@@ -5,12 +5,12 @@
  * (Tridiagonal matrix algorithm or Thomas algorithm)
  *
  * The matrix is represented here as three
- * vectors: a is the lower diagonal, b is the diagonal and c the upper
- * diagonal. d is a the righ-hand side vector, modified to store the
+ * arrays: a is the lower diagonal, b is the diagonal and c the upper
+ * diagonal. d is a the righ-hand side array, modified to store the
  * solutions
  * dim is the dimension of the matrix (length of b)
  *
- * the three vectors are destroyed during the procedure
+ * the three arrays are destroyed during the procedure
  */
 void tridiag(int dim, double *a, double *b, double *c, double *d)
 {

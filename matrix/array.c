@@ -74,9 +74,9 @@ void reorder_array_double(int len, double *array, int *orders_arg)
   }
 }
 
-/* copy vectors */
+/* copy arrays */
 
-void copy_vector_int(int len, int *source, int *dest)
+void copy_array_int(int len, int *source, int *dest)
 {
   int i;
   for (i = 0; i < len; i++) {
@@ -84,7 +84,7 @@ void copy_vector_int(int len, int *source, int *dest)
   }
 }
 
-void copy_vector_double(int len, double *source, double *dest)
+void copy_array_double(int len, double *source, double *dest)
 {
   int i;
   for (i = 0; i < len; i++) {
@@ -94,41 +94,41 @@ void copy_vector_double(int len, double *source, double *dest)
 
 /* multiply */
 
-void multiply_vector_int(int len, int *vector, int k)
+void multiply_array_int(int len, int *array, int k)
 {
   int i;
   for (i = 0; i < len; i++) {
-    vector[i] *= k;
+    array[i] *= k;
   }
 }
 
-void multiply_vector_double(int len, double *vector, double k)
+void multiply_array_double(int len, double *array, double k)
 {
   int i;
   for (i = 0; i < len; i++) {
-    vector[i] *= k;
+    array[i] *= k;
   }
 }
 
 /* absolute value */
 
-int absmax_vector_int(int len, int *vector)
+int absmax_array_int(int len, int *array)
 {
   int max = 0;
   while (len-- > 0) {
-    if (abs(vector[len]) > max) {
-      max = vector[len];
+    if (abs(array[len]) > max) {
+      max = array[len];
     }
   }
   return max;
 }
 
-double absmax_vector_double(int len, double *vector)
+double absmax_array_double(int len, double *array)
 {
   double max = 0;
   while (len-- > 0) {
-    if (abs(vector[len]) > max) {
-      max = vector[len];
+    if (abs(array[len]) > max) {
+      max = array[len];
     }
   }
   return max;

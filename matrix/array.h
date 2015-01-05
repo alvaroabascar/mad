@@ -10,13 +10,13 @@ void interchange_array_elements_double(double *array, int i, int j);
 void reorder_array_int(int len, int *array, int *orders);
 void reorder_array_double(int len, double *array, int *orders);
 
-void copy_vector_int(int len, int *source, int *dest);
-void copy_vector_double(int len, double *source, double *dest);
+void copy_array_int(int len, int *source, int *dest);
+void copy_array_double(int len, double *source, double *dest);
 
-void multiply_vector_int(int len, int *vector, int k);
-void multiply_vector_double(int len, double *vector, double k);
+void multiply_array_int(int len, int *array, int k);
+void multiply_array_double(int len, double *array, double k);
 
-int absmax_vector_int(int len, int *vector);
-double absmax_vector_double(int len, double *vector);
+int absmax_array_int(int len, int *array);
+double absmax_array_double(int len, double *array);
 
 #endif /* __ARRAY_H_ */

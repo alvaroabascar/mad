@@ -11,7 +11,7 @@
  * which compose a system of equations A*x = B, perform a gauss-jordan
  * elimination to produce the inverse of A and the matrix of solutions X.
  *
- * Note: B might be a n by 1 matrix (a vector) or a n x m matrix. This last
+ * Note: B might be a n by 1 matrix (a array) or a n x m matrix. This last
  * case is equivalent to solving m systems of equations.
  */
 int gaussjbs(matrix_double A, matrix_double B)
@@ -38,7 +38,7 @@ int gaussjbs(matrix_double A, matrix_double B)
    double scaling[A.nrows];
 
    for (i = 0; i < A.nrows; i++) {
-     scaling[i] = absmax_vector_double(A.ncols, A.data[i]);
+     scaling[i] = absmax_array_double(A.ncols, A.data[i]);
    }
 
    /* I use this to delimitate a section of the matrix, so that I
@@ -78,12 +78,12 @@ int gaussjbs(matrix_double A, matrix_double B)
      /* for each OTHER row, substract the right amount of current_row to
       * make the elements [j][i] equal to zero */
      for (j = i + 1; j < A.nrows; j++) {
-       /* copy it into another vector and multiply it by the element we
+       /* copy it into another array and multiply it by the element we
         * wish to make zero (-1 is to add instead of substract) */
-       copy_vector_double(A.ncols, current_row_A, row_to_substract_A);
-       copy_vector_double(B.ncols, current_row_B, row_to_substract_B);
-       multiply_vector_double(A.ncols, row_to_substract_A, -1*A.data[j][i]);
-       multiply_vector_double(B.ncols, row_to_substract_B, -1*A.data[j][i]);
+       copy_array_double(A.ncols, current_row_A, row_to_substract_A);
+       copy_array_double(B.ncols, current_row_B, row_to_substract_B);
+       multiply_array_double(A.ncols, row_to_substract_A, -1*A.data[j][i]);
+       multiply_array_double(B.ncols, row_to_substract_B, -1*A.data[j][i]);
        /* now substract (add, as it was multiplied by -1) it from row j */
        add_to_row_matrix_double(A, j, row_to_substract_A);
        add_to_row_matrix_double(B, j, row_to_substract_B);
@@ -91,7 +91,7 @@ int gaussjbs(matrix_double A, matrix_double B)
    }
    /* backsubstitution */
    for (i = A.nrows - 1; i >= 0; i--) {
-     multiply_vector_double(B.ncols, current_row_B, 0); // set to zero
+     multiply_array_double(B.ncols, current_row_B, 0); // set to zero
      for (j = A.ncols - 1; j > i; j--) {
        for (k = 0; k < B.ncols; k++) {
          current_row_B[k] -= B.data[j][k] * A.data[i][j];

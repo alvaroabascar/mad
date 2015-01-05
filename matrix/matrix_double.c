@@ -137,7 +137,7 @@ void multiply_matrix_double(matrix_double matrix, double k)
 }
 
 /* copy_row_matrix_double:
- * given a matrix "A", a vector "v" and an integer "row",
+ * given a matrix "A", a array "v" and an integer "row",
  * copy the row A[row] into v
  */
 void copy_row_matrix_double(matrix_double A, double *v, int row)
@@ -148,13 +148,13 @@ void copy_row_matrix_double(matrix_double A, double *v, int row)
   }
 }
 
-/* add "vector" to row matrix[row] */
+/* add "array" to row matrix[row] */
 void add_to_row_matrix_double(matrix_double matrix, int row,
-                                      double vector[matrix.ncols])
+                                      double array[matrix.ncols])
 {
   int i;
   for (i = 0; i < matrix.ncols; i++) {
-    matrix.data[row][i] += vector[i];
+    matrix.data[row][i] += array[i];
   }
 }
 

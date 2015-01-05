@@ -28,7 +28,7 @@ int ludcmp(matrix_double A, int *changes, int *d)
   double scaling[A.nrows];
   for (j = 0; j < A.ncols; j++) {
     changes[j] = j;
-    scaling[j] = absmax_vector_double(A.nrows, A.data[j]);
+    scaling[j] = absmax_array_double(A.nrows, A.data[j]);
   }
 
   for (j = 0; j < A.ncols; j++) {
@@ -59,10 +59,10 @@ int ludcmp(matrix_double A, int *changes, int *d)
   return 0;
 }
 
-/* Given a LU decomposed matrix "LU", a right-hand side vector "B", an
+/* Given a LU decomposed matrix "LU", a right-hand side array "B", an
  * array containing the row changes "changes" and an integer "d" specifying
  * whether the number of changes is even (0) or odd (1), transform "B" into
- * the vector of solutions
+ * the array of solutions
  *
  * Explanation:
  * Our system is of the form:

@@ -10,7 +10,7 @@
  * which compose a system of equations A*x = B, perform a gauss-jordan
  * elimination to produce the inverse of A and the matrix of solutions X.
  *
- * Note: B might be a n by 1 matrix (a vector) or a n x m matrix. This last
+ * Note: B might be a n by 1 matrix (a array) or a n x m matrix. This last
  * case is equivalent to solving the m systems of equations.
  */
 int gaussj(matrix_double A, matrix_double B)
@@ -36,7 +36,7 @@ int gaussj(matrix_double A, matrix_double B)
    double row_to_substract_B[B.ncols];
    double scaling[A.nrows];
    for (i = 0; i < A.nrows; i++) {
-     scaling[i] = absmax_vector_double(A.ncols, A.data[i]);
+     scaling[i] = absmax_array_double(A.ncols, A.data[i]);
    }
    /* for each element in the diagonal... */
    for (i = 0; i < A.nrows; i++) {
@@ -67,12 +67,12 @@ int gaussj(matrix_double A, matrix_double B)
        if (j == i) {
          continue;
        }
-       /* copy it into another vector and multiply it by the element we
+       /* copy it into another array and multiply it by the element we
         * wish to make zero (-1 is to add instead of substract) */
-       copy_vector_double(A.ncols, current_row_A, row_to_substract_A);
-       copy_vector_double(B.ncols, current_row_B, row_to_substract_B);
-       multiply_vector_double(A.ncols, row_to_substract_A, -1*A.data[j][i]);
-       multiply_vector_double(B.ncols, row_to_substract_B, -1*A.data[j][i]);
+       copy_array_double(A.ncols, current_row_A, row_to_substract_A);
+       copy_array_double(B.ncols, current_row_B, row_to_substract_B);
+       multiply_array_double(A.ncols, row_to_substract_A, -1*A.data[j][i]);
+       multiply_array_double(B.ncols, row_to_substract_B, -1*A.data[j][i]);
        A.data[j][i] = 0;
        /* now substract (add, as it was multiplied by -1) it from row j */
        add_to_row_matrix_double(A, j, row_to_substract_A);
