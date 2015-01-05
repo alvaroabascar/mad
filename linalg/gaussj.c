@@ -38,7 +38,6 @@ int gaussj(matrix_double A, matrix_double B)
    for (i = 0; i < A.nrows; i++) {
      scaling[i] = absmax_vector_double(A.ncols, A.data[i]);
    }
-
    /* for each element in the diagonal... */
    for (i = 0; i < A.nrows; i++) {
      /* 1. place in the diagonal the best (largest) element found in the

@@ -14,7 +14,7 @@ void copy_vector_int(int len, int *source, int *dest);
 void copy_vector_double(int len, double *source, double *dest);
 
 void multiply_vector_int(int len, int *vector, int k);
-void multiply_vector_double(int len, double *vector, int k);
+void multiply_vector_double(int len, double *vector, double k);
 
 int absmax_vector_int(int len, int *vector);
 double absmax_vector_double(int len, double *vector);

@@ -102,7 +102,7 @@ void multiply_vector_int(int len, int *vector, int k)
   }
 }
 
-void multiply_vector_double(int len, double *vector, int k)
+void multiply_vector_double(int len, double *vector, double k)
 {
   int i;
   for (i = 0; i < len; i++) {
