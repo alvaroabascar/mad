@@ -1,4 +1,4 @@
 mad
 ===
 
-Linear algebra stuff, made in C with lots of love.
+Linear algebra stuff, written in C with lots of love.
