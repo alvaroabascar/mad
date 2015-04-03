@@ -210,3 +210,20 @@ void interchange_cols_matrix_double(matrix_double matrix,
     matrix.data[i][colB] = tmp;
   }
 }
+
+matrix_double transpose_matrix_double(matrix_double matrix)
+{
+  int i, j;
+  matrix_double transposed = alloc_matrix_double(matrix.ncols, matrix.nrows);
+  for (i = 0; i < matrix.nrows; i++)
+    for (j = 0; j < matrix.ncols; j++)
+      transposed.data[i][j] = matrix.data[j][i];
+  return transposed;
+}
+
+void set_column_matrix_double(matrix_double matrix, double *column, int col_index)
+{
+  int i;
+  for (i = 0; i < matrix.nrows; i++)
+    matrix.data[i][col_index] = column[i];
+}
