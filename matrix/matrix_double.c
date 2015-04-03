@@ -144,7 +144,7 @@ matrix_double matrix_product_matrix_double(matrix_double matrix1,
                                             matrix_double matrix2)
 {
   if (matrix1.ncols != matrix2.nrows) {
-    fprintf(stderr, "Error: attemp to multiply matrices with dimensions %d x %d and %d x %d",
+    fprintf(stderr, "Error: attempt to multiply matrices with dimensions %d x %d and %d x %d.\n",
             (int)matrix1.nrows, (int)matrix1.ncols, (int)matrix2.nrows, (int)matrix2.ncols);
     return alloc_matrix_double(0, 0);
   }
