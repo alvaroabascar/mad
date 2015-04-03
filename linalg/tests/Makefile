@@ -4,7 +4,7 @@ CC = gcc
 INCLUDES = -I$(SRC_DIR)/linalg/ -I$(SRC_DIR)/matrix/
 CFLAGS = -Wall -g $(INCLUDES)
 
-SRC_DIR := /home/alvaro/Repos/mad
+SRC_DIR := ../..
 MATRIX_OBJ := $(SRC_DIR)/matrix/matrix.o
 PIVOTING_OBJ := $(SRC_DIR)/linalg/pivoting.o
 

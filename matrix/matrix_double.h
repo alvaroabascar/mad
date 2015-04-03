@@ -20,8 +20,12 @@ void add_to_section_matrix_double(matrix_double matrix,
                                   struct pair_coordinates section,
                                   double k);
 void reorder_matrix_rows_double(matrix_double matrix, int *orders);
+
+/* multiplication */
 void multiply_row_matrix_double(matrix_double matrix, int row, double k);
 void multiply_matrix_double(matrix_double matrix, double k);
+matrix_double matrix_product_matrix_double(matrix_double matrix1, matrix_double matrix2);
+
 void copy_row_matrix_double(matrix_double A, double *v, int row);
 void add_to_row_matrix_double(matrix_double matrix, int row,
                               double vector[matrix.ncols]);

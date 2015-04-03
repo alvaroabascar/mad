@@ -124,7 +124,7 @@ void multiply_row_matrix_double(matrix_double matrix, int row, double k)
 }
 
 /* multiply_matrix_double:
- * take a matrix "matrix" and divide all its elements by "k"
+ * take a matrix "matrix" and multiply all its elements by "k"
  */
 void multiply_matrix_double(matrix_double matrix, double k)
 {
@@ -135,6 +135,32 @@ void multiply_matrix_double(matrix_double matrix, double k)
     }
   }
 }
+
+/* matrix_product_matrix_double:
+ * matrix multiplication. Take two matrices n x m and m x k and return
+ * the matrix product (n x k).
+ */
+matrix_double matrix_product_matrix_double(matrix_double matrix1,
+                                            matrix_double matrix2)
+{
+  if (matrix1.ncols != matrix2.nrows) {
+    fprintf(stderr, "Error: attemp to multiply matrices with dimensions %d x %d and %d x %d",
+            matrix1.nrows, matrix1.ncols, matrix2.nrows, matrix2.ncols);
+    return alloc_matrix_double(0, 0);
+  }
+  matrix_double result = alloc_matrix_double(matrix1.nrows, matrix2.ncols);
+  int i, j, k;
+  for (i = 0; i < matrix1.nrows; i++) {
+    for (j = 0; j < matrix1.ncols; j++) {
+      result.data[i][j] = 0;
+      for (k = 0; k < matrix1.ncols; k++) {
+        result.data[i][j] += matrix1.data[i][k] * matrix2.data[k][j];
+      }
+    }
+  }
+  return result;
+}
+
 
 /* copy_row_matrix_double:
  * given a matrix "A", a array "v" and an integer "row",
