@@ -13,8 +13,10 @@ void reorder_array_double(int len, double *array, int *orders);
 void copy_array_int(int len, int *source, int *dest);
 void copy_array_double(int len, double *source, double *dest);
 
+/* multiplication */
 void multiply_array_int(int len, int *array, int k);
 void multiply_array_double(int len, double *array, double k);
+double dot_product_array_double(int len, double *array1, double *array2);
 
 int absmax_array_int(int len, int *array);
 double absmax_array_double(int len, double *array);

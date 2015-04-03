@@ -110,6 +110,15 @@ void multiply_array_double(int len, double *array, double k)
   }
 }
 
+double dot_product_array_double(int len, double *array1, double *array2)
+{
+  double result = 0;
+  while (len-- > 0)
+    result += array1[len]*array2[len];
+  return result;
+}
+
+
 /* absolute value */
 
 int absmax_array_int(int len, int *array)
