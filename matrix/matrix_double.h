@@ -33,4 +33,5 @@ void interchange_rows_matrix_double(matrix_double matrix, int rowA, int rowB);
 void interchange_cols_matrix_double(matrix_double matrix, int colA, int colB);
 
 matrix_double transpose_matrix_double(matrix_double matrix);
+void set_column_matrix_double(matrix_double matrix, double *column, int col_index);
 #endif /* __MATRIX_DOUBLE_H_ */
