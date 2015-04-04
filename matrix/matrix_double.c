@@ -199,7 +199,7 @@ void copy_row_matrix_double(matrix_double A, double *v, int row)
  * given a matrix "A", an array "v" and an integer "col",
  * copy the column "col" from A into v
  */
-void copy_col_matrix_double(matrix_double A, double *v, int row)
+void copy_col_matrix_double(matrix_double A, double *v, int col)
 {
   int i;
   for (i = 0; i < A.nrows; i++) {
