@@ -184,7 +184,7 @@ int add_matrix_to_matrix_double(matrix_double toadd,
 }
 
 /* copy_row_matrix_double:
- * given a matrix "A", a array "v" and an integer "row",
+ * given a matrix "A", an array "v" and an integer "row",
  * copy the row A[row] into v
  */
 void copy_row_matrix_double(matrix_double A, double *v, int row)
@@ -192,6 +192,18 @@ void copy_row_matrix_double(matrix_double A, double *v, int row)
   int i;
   for (i = 0; i < A.ncols; i++) {
     v[i] = A.data[row][i];
+  }
+}
+
+/* copy_col_matrix_double:
+ * given a matrix "A", an array "v" and an integer "col",
+ * copy the column "col" from A into v
+ */
+void copy_col_matrix_double(matrix_double A, double *v, int row)
+{
+  int i;
+  for (i = 0; i < A.nrows; i++) {
+    v[i] = A.data[i][col];
   }
 }
 
