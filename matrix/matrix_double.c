@@ -164,6 +164,8 @@ matrix_double matrix_product_matrix_double(matrix_double matrix1,
 /* Add to the first matrix the elements of the second one. The first one
  * is modified, the second one remains untouched.
  * Both matrices must have the same dimensions.
+ *
+ * Returns: 0 if everything was OK, -1 if dimensions didn't match.
  */
 int add_matrix_to_matrix_double(matrix_double tomodify,
                                 matrix_double toadd)
@@ -178,6 +180,7 @@ int add_matrix_to_matrix_double(matrix_double tomodify,
   for (i = 0; i < tomodify.nrows; i++)
     for (j = 0; j < tomodify.nrows; j++)
       tomodify.data[i][j] += toadd.data[i][j];
+  return 0;
 }
 
 /* copy_row_matrix_double:
