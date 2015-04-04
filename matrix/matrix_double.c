@@ -161,6 +161,24 @@ matrix_double matrix_product_matrix_double(matrix_double matrix1,
   return result;
 }
 
+/* Add to the first matrix the elements of the second one. The first one
+ * is modified, the second one remains untouched.
+ * Both matrices must have the same dimensions.
+ */
+int add_matrix_to_matrix_double(matrix_double tomodify,
+                                matrix_double toadd)
+{
+  int i, j;
+  /* check dimensions */
+  if ((tomodify.ncols != toadd.ncols) || (tomodify.nrows != tomodify.nrows)) {
+    fprintf(stderr, "Error: attempt to add matrices of different sizes: %dx%d and %dx%d.\n",
+        (int)tomodify.nrows, (int)tomodify.ncols, (int)toadd.nrows, (int)toadd.ncols);
+    return -1;
+  }
+  for (i = 0; i < tomodify.nrows; i++)
+    for (j = 0; j < tomodify.nrows; j++)
+      tomodify.data[i][j] += toadd.data[i][j];
+}
 
 /* copy_row_matrix_double:
  * given a matrix "A", a array "v" and an integer "row",
