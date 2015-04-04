@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 #define IA 16807
@@ -48,4 +49,18 @@ float gauss0(long *seed)
     y2 = x2*fac;
     flag = 1;
     return y1;
+}
+
+/* return a random number between 0 and limit (inclusive). */
+int rand_lim(int limit)
+{
+
+  int divisor = RAND_MAX / (limit + 1);
+  int retval;
+
+  do {
+    retval = rand() / divisor;
+  } while (retval > limit);
+
+  return retval;
 }
