@@ -237,7 +237,7 @@ void interchange_cols_matrix_double(matrix_double matrix,
 {
   int i;
   double tmp;
-  for (i = 0; i < matrix.ncols; i++) {
+  for (i = 0; i < matrix.nrows; i++) {
     tmp = matrix.data[i][colA];
     matrix.data[i][colA] = matrix.data[i][colB];
     matrix.data[i][colB] = tmp;
@@ -260,3 +260,7 @@ void set_column_matrix_double(matrix_double matrix, double *column, int col_inde
   for (i = 0; i < matrix.nrows; i++)
     matrix.data[i][col_index] = column[i];
 }
+
+/* Shuffle the columns using the Fisher Yates shuffle */
+void shuffle_columns_matrix_double(matrix_double matrix)
+{
