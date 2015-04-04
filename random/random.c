@@ -28,7 +28,7 @@ float rand0(long *seed) {
  * normally distributed random numbers, with mean 0 and
  * standard deviation 1.
  */
-float gauss(long *seed)
+float gauss0(long *seed)
 {
     float x1, x2, y1, r, fac;
     static float y2;
