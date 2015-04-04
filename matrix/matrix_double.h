@@ -37,8 +37,8 @@ void multiply_matrix_double(matrix_double matrix, double k);
 matrix_double matrix_product_matrix_double(matrix_double matrix1, matrix_double matrix2);
 
 /*** addition ***/
-int add_matrix_to_matrix_double(matrix_double tomodify,
-                                matrix_double toadd);
+int add_matrix_to_matrix_double(matrix_double toadd,
+                                matrix_double tomodify);
 
 /*** work with individual columns / rows ***/
 void interchange_rows_matrix_double(matrix_double matrix, int rowA, int rowB);
