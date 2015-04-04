@@ -264,3 +264,10 @@ void set_column_matrix_double(matrix_double matrix, double *column, int col_inde
 /* Shuffle the columns using the Fisher Yates shuffle */
 void shuffle_columns_matrix_double(matrix_double matrix)
 {
+  int i, j;
+  for (i = matrix.ncols-1; i >= 1; i--) {
+    j = rand_lim(i);
+    interchange_cols_matrix_double(matrix, i, j);
+  }
+}
+

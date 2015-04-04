@@ -44,6 +44,7 @@ int add_matrix_to_matrix_double(matrix_double toadd,
 void interchange_rows_matrix_double(matrix_double matrix, int rowA, int rowB);
 void interchange_cols_matrix_double(matrix_double matrix, int colA, int colB);
 void set_column_matrix_double(matrix_double matrix, double *column, int col_index);
+void shuffle_columns_matrix_double(matrix_double matrix)
 void copy_row_matrix_double(matrix_double A, double *v, int row);
 void copy_col_matrix_double(matrix_double A, double *v, int col);
 void add_to_row_matrix_double(matrix_double matrix, int row,
