@@ -4,14 +4,6 @@
 #define max(x) ((x > 0) ? x : -x)
 
 /* allocate enough space for a nrows by ncols matrix and return it, with all
- * elements set to zero
- */
-matrix_double alloc_matrix_double(size_t nrows, size_t ncols)
-{
-  return alloc_matrix_double_set(nrows, ncols, 0);
-}
-
-/* allocate enough space for a nrows by ncols matrix and return it, with all
  * elements set to "value"
  */ 
 matrix_double alloc_matrix_double_set(size_t nrows, size_t ncols, double value)
@@ -30,6 +22,20 @@ matrix_double alloc_matrix_double_set(size_t nrows, size_t ncols, double value)
   return matrix;
 }
 
+/* allocate enough space for a nrows by ncols matrix and return it, with all
+ * elements set to zero
+ */
+matrix_double alloc_matrix_double(size_t nrows, size_t ncols)
+{
+  return alloc_matrix_double_set(nrows, ncols, 0);
+}
+
+/* like alloc_matrix_double, but will contain all ones instead of zeros */
+matrix_double alloc_matrix_double_ones(size_t nrows, size_t ncols)
+{
+  return alloc_matrix_double_set(nrows, ncols, 1);
+}
+
 /* free the space used by the matrix */
 void free_matrix_double(matrix_double matrix)
 {
@@ -42,12 +48,6 @@ void free_matrix_double(matrix_double matrix)
   free(matrix.data);
   matrix.nrows = 0;
   matrix.ncols = 0;
-}
-
-/* like alloc_matrix_double, but will contain all ones instead of zeros */
-matrix_double alloc_matrix_double_ones(size_t nrows, size_t ncols)
-{
-  matrix_double matrix = alloc_matrix_double
 }
 
 matrix_double copy_matrix_double(matrix_double matrix)
