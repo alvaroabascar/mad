@@ -8,7 +8,7 @@
  */
 matrix_double alloc_matrix_double(size_t nrows, size_t ncols)
 {
-  return alloc_matirx_double_set(nrows, ncols, 0);
+  return alloc_matrix_double_set(nrows, ncols, 0);
 }
 
 /* allocate enough space for a nrows by ncols matrix and return it, with all
