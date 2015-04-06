@@ -98,6 +98,22 @@ void add_to_section_matrix_double(matrix_double matrix,
   }
 }
 
+/* Given a matrix, extract a section and return it as a new matrix */
+matrix_double extract_section_matrix_double(matrix_double matrix,
+                                            struct pair_coordinates section)
+{
+  int nrows, ncols, i, j;
+  nrows = section.b.row - section.a.row;
+  ncols = section.b.col - section.a.col;
+  matrix_double new_matrix = alloc_matrix_double(nrows, ncols);
+  for (i = section.a.row; i < section.b.row; i++) {
+    for (j = section.a.col; j < section.b.col; j++) {
+      new_matrix.data[i-section.a.row][j-section.a.col] = matrix.data[i][j];
+    }
+  }
+  return new_matrix;
+}
+
 void reorder_matrix_rows_double(matrix_double matrix, int *orders_arg)
 {
   int i;

@@ -27,6 +27,8 @@ void add_to_section_matrix_double(matrix_double matrix,
                                   double k);
 void reorder_matrix_rows_double(matrix_double matrix, int *orders);
 
+matrix_double extract_section_matrix_double(matrix_double matrix,
+                                            struct pair_coordinates section);
 /*** multiplication ***/
 
 /* single row */
