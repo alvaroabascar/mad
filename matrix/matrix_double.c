@@ -167,7 +167,7 @@ matrix_double matrix_product_matrix_double(matrix_double matrix1,
   matrix_double result = alloc_matrix_double(matrix1.nrows, matrix2.ncols);
   int i, j, k;
   for (i = 0; i < matrix1.nrows; i++) {
-    for (j = 0; j < matrix1.ncols; j++) {
+    for (j = 0; j < matrix2.ncols; j++) {
       result.data[i][j] = 0;
       for (k = 0; k < matrix1.ncols; k++) {
         result.data[i][j] += matrix1.data[i][k] * matrix2.data[k][j];
