@@ -286,7 +286,7 @@ matrix_double transpose_matrix_double(matrix_double matrix)
   return transposed;
 }
 
-void set_column_matrix_double(matrix_double matrix, double *column, int col_index)
+void set_col_matrix_double(matrix_double matrix, double *column, int col_index)
 {
   int i;
   for (i = 0; i < matrix.nrows; i++)
