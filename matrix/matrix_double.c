@@ -119,12 +119,11 @@ matrix_double extract_section_matrix_double(matrix_double matrix,
                                             struct pair_coordinates section)
 {
   int nrows, ncols, i, j;
-  /* from b.row to a.row INCLUSIVE, and the same for the columns */
-  nrows = section.b.row - section.a.row + 1;
-  ncols = section.b.col - section.a.col + 1;
+  nrows = section.b.row - section.a.row;
+  ncols = section.b.col - section.a.col;
   matrix_double new_matrix = alloc_matrix_double(nrows, ncols);
-  for (i = section.a.row; i <= section.b.row; i++) {
-    for (j = section.a.col; j <= section.b.col; j++) {
+  for (i = section.a.row; i < section.b.row; i++) {
+    for (j = section.a.col; j < section.b.col; j++) {
       new_matrix.data[i-section.a.row][j-section.a.col] = matrix.data[i][j];
     }
   }
