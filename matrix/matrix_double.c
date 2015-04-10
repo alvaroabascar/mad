@@ -224,7 +224,7 @@ int substract_matrix_from_matrix_double(matrix_double tosubstract,
 {
   int i, j;
   /* check dimensions */
-  if ((tomodify.ncols != toadd.ncols) || (tomodify.nrows != toadd.nrows)) {
+  if ((tomodify.ncols != tosubstract.ncols) || (tomodify.nrows != tosubstract.nrows)) {
     fprintf(stderr, "Error: attempt to substact matrices of different sizes: %dx%d and %dx%d.\n",
         (int)tomodify.nrows, (int)tomodify.ncols, (int)tosubstract.nrows, (int)tosubstract.ncols);
     return -1;
