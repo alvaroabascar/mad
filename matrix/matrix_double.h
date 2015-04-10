@@ -43,7 +43,7 @@ matrix_double matrix_product_matrix_double(matrix_double matrix1, matrix_double 
 int add_matrix_to_matrix_double(matrix_double toadd,
                                 matrix_double tomodify);
 /* substraction */
-int substract_matrix_from_matrix_double(matrix_double toadd,
+int substract_matrix_from_matrix_double(matrix_double tosubstract,
                                         matrix_double tomodify);
 
 /*** work with individual columns / rows ***/

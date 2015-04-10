@@ -222,10 +222,17 @@ int add_matrix_to_matrix_double(matrix_double toadd,
 int substract_matrix_from_matrix_double(matrix_double tosubstract,
                                         matrix_double tomodify)
 {
-  matrix_double tmp = copy_matrix_double(tosubstract);
-  multiply_matrix_double(tmp, -1);
-  add_matrix_to_matrix_double(tmp, tomodify);
-  free_matrix_double(tmp);
+  int i, j;
+  /* check dimensions */
+  if ((tomodify.ncols != toadd.ncols) || (tomodify.nrows != toadd.nrows)) {
+    fprintf(stderr, "Error: attempt to substact matrices of different sizes: %dx%d and %dx%d.\n",
+        (int)tomodify.nrows, (int)tomodify.ncols, (int)tosubstract.nrows, (int)tosubstract.ncols);
+    return -1;
+  }
+  for (i = 0; i < tomodify.nrows; i++)
+    for (j = 0; j < tomodify.ncols; j++)
+      tomodify.data[i][j] -= tosubstract.data[i][j];
+  return 0;
 }
 
 /* copy_row_matrix_double:
