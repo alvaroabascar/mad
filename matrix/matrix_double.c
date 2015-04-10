@@ -215,6 +215,19 @@ int add_matrix_to_matrix_double(matrix_double toadd,
   return 0;
 }
 
+/**
+ * Substract from the second matrix, the first one. The first matrix remains
+ * untouched, but the second one is modified.
+ */
+int substract_matrix_from_matrix_double(matrix_double tosubstract,
+                                        matrix_double tomodify)
+{
+  matrix_double tmp = copy_matrix_double(tosubstract);
+  multiply_matrix_double(tmp, -1);
+  add_matrix_to_matrix_double(tmp, tomodify);
+  free_matrix_double(tmp);
+}
+
 /* copy_row_matrix_double:
  * given a matrix "A", an array "v" and an integer "row",
  * copy the row A[row] into v
