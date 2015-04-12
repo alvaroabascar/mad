@@ -36,9 +36,10 @@ matrix_double extract_section_matrix_double(matrix_double matrix,
 void multiply_row_matrix_double(matrix_double matrix, int row, double k);
 /* scalar */
 void multiply_matrix_double(matrix_double matrix, double k);
-/* dot product */
+/* matrix product */
 matrix_double matrix_product(matrix_double matrix1, matrix_double matrix2);
-
+/* dot product*/
+matrix_double matrix_dot_product(matrix_double matrix1, matrix_double matrix2);
 /* addition */
 int add_matrix_to_matrix_double(matrix_double toadd,
                                 matrix_double tomodify);

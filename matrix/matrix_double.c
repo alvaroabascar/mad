@@ -168,12 +168,11 @@ void multiply_matrix_double(matrix_double matrix, double k)
   }
 }
 
-/* matrix_product:
+/** matrix_product:
  * matrix multiplication. Take two matrices n x m and m x k and return
  * the matrix product (n x k).
  */
-matrix_double matrix_product(matrix_double matrix1,
-                                            matrix_double matrix2)
+matrix_double matrix_product(matrix_double matrix1, matrix_double matrix2)
 {
   if (matrix1.ncols != matrix2.nrows) {
     fprintf(stderr, "Error: attempt to multiply matrices with dimensions %d x %d and %d x %d.\n",
@@ -191,6 +190,27 @@ matrix_double matrix_product(matrix_double matrix1,
     }
   }
   return result;
+}
+
+/**
+ * Perform the matrix product of two matrices, and return the result as a new
+ * matrix. Both matrices must have the same dimensions.
+ */
+matrix_double matrix_dot_product(matrix_double m1, matrix_double m2)
+{
+  /* check dimensions */
+  if ((m1.ncols != m1.ncols) || (m2.nrows != m2.nrows)) {
+    fprintf(stderr, "Error: attempt to dot product matrices of different sizes: %dx%d and %dx%d.\n",
+        (int)tomodify.nrows, (int)tomodify.ncols, (int)toadd.nrows, (int)toadd.ncols);
+    return alloc_matrix_double(0, 0);
+  }
+  matrix_double result = alloc_matrix_double(m1.nrows, m2.ncols);
+  int i, j;
+  for (i = 0; i < m1.nrows; i++) {
+    for (j = 0; j < m1.ncols; j++) {
+      result.data[i][j] = m1.data[i][j] * m2.data[i][j];
+    }
+  }
 }
 
 /* Add to the second matrix the elements of the first one. The first one
