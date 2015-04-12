@@ -201,7 +201,7 @@ matrix_double matrix_dot_product(matrix_double m1, matrix_double m2)
   /* check dimensions */
   if ((m1.ncols != m1.ncols) || (m2.nrows != m2.nrows)) {
     fprintf(stderr, "Error: attempt to dot product matrices of different sizes: %dx%d and %dx%d.\n",
-        (int)tomodify.nrows, (int)tomodify.ncols, (int)toadd.nrows, (int)toadd.ncols);
+        (int)m1.nrows, (int)m1.ncols, (int)m2.nrows, (int)m2.ncols);
     return alloc_matrix_double(0, 0);
   }
   matrix_double result = alloc_matrix_double(m1.nrows, m2.ncols);
