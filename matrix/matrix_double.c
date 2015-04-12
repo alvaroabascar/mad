@@ -322,7 +322,7 @@ matrix_double transpose_matrix_double(matrix_double matrix)
   matrix_double transposed = alloc_matrix_double(matrix.ncols, matrix.nrows);
   for (i = 0; i < matrix.nrows; i++)
     for (j = 0; j < matrix.ncols; j++)
-      transposed.data[i][j] = matrix.data[j][i];
+      transposed.data[j][i] = matrix.data[i][j];
   return transposed;
 }
 
