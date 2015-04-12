@@ -199,7 +199,7 @@ matrix_double matrix_product(matrix_double matrix1, matrix_double matrix2)
 matrix_double matrix_dot_product(matrix_double m1, matrix_double m2)
 {
   /* check dimensions */
-  if ((m1.ncols != m1.ncols) || (m2.nrows != m2.nrows)) {
+  if ((m1.ncols != m2.ncols) || (m1.nrows != m2.nrows)) {
     fprintf(stderr, "Error: attempt to dot product matrices of different sizes: %dx%d and %dx%d.\n",
         (int)m1.nrows, (int)m1.ncols, (int)m2.nrows, (int)m2.ncols);
     return alloc_matrix_double(0, 0);
@@ -322,7 +322,7 @@ matrix_double transpose_matrix_double(matrix_double matrix)
   matrix_double transposed = alloc_matrix_double(matrix.ncols, matrix.nrows);
   for (i = 0; i < matrix.nrows; i++)
     for (j = 0; j < matrix.ncols; j++)
-      transposed.data[j][i] = matrix.data[i][j];
+      transposed.data[i][j] = matrix.data[j][i];
   return transposed;
 }
 
