@@ -168,11 +168,11 @@ void multiply_matrix_double(matrix_double matrix, double k)
   }
 }
 
-/* matrix_product_matrix_double:
+/* matrix_product:
  * matrix multiplication. Take two matrices n x m and m x k and return
  * the matrix product (n x k).
  */
-matrix_double matrix_product_matrix_double(matrix_double matrix1,
+matrix_double matrix_product(matrix_double matrix1,
                                             matrix_double matrix2)
 {
   if (matrix1.ncols != matrix2.nrows) {

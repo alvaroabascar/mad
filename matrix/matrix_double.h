@@ -37,7 +37,7 @@ void multiply_row_matrix_double(matrix_double matrix, int row, double k);
 /* scalar */
 void multiply_matrix_double(matrix_double matrix, double k);
 /* dot product */
-matrix_double matrix_product_matrix_double(matrix_double matrix1, matrix_double matrix2);
+matrix_double matrix_product(matrix_double matrix1, matrix_double matrix2);
 
 /* addition */
 int add_matrix_to_matrix_double(matrix_double toadd,
