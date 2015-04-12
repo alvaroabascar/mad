@@ -211,6 +211,7 @@ matrix_double matrix_dot_product(matrix_double m1, matrix_double m2)
       result.data[i][j] = m1.data[i][j] * m2.data[i][j];
     }
   }
+  return result;
 }
 
 /* Add to the second matrix the elements of the first one. The first one
