@@ -227,7 +227,7 @@ int add_matrix_to_matrix_double(matrix_double toadd,
   /* check dimensions */
   if ((tomodify.ncols != toadd.ncols) || (tomodify.nrows != toadd.nrows)) {
     fprintf(stderr, "Error: attempt to add matrices of different sizes: %dx%d and %dx%d.\n",
-        (int)tomodify.nrows, (int)tomodify.ncols, (int)toadd.nrows, (int)toadd.ncols);
+        (int)toadd.nrows, (int)toadd.ncols), (int)tomodify.nrows, (int)tomodify.ncols;
     return -1;
   }
   for (i = 0; i < tomodify.nrows; i++)
